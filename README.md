@@ -18,7 +18,16 @@
 `gfas` synchronizes your GitHub followings to your followers. It runs on CLI and can be
 scheduled automatically with GitHub Actions.
 
-## Usage
+## Quick Start
+
+- Fork this repository.
+- Create a personal access token in GitHub settings (only `user:follow` is required).
+- Set the token as a secret named `TOKEN` of the repository.
+- (Optional) Modify the scheduled time in `.github/workflow/sync.yml`. By default, it runs at 0 minutes past the hour every 6 hours.
+- (Optional) Maybe you want to trigger the `Sync` workflow manually to see the effect.
+- You are ready to follow back  automatically!
+
+## CLI Usage
 
 ```plaintext
 $ cargo run --release -- --help
