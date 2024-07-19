@@ -2,27 +2,18 @@ name: Build
 
 on: [push]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-ubuntu:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
-      - name: Build
-        run: cargo run --verbose -- -h
-  
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    runs-on: ${{ matrix.os }}
 
-      - name: Build
-        run: cargo run --verbose -- -h
-
-  build-macos:
-    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
