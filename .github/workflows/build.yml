@@ -22,3 +22,6 @@ jobs:
 
       - name: Build
         run: cargo run --verbose -- -h
+
+      - name: Doc
+        run: cargo doc --no-deps --lib

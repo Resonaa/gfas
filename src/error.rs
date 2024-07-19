@@ -1,7 +1,7 @@
 use thiserror::Error;
 use tracing::subscriber::SetGlobalDefaultError;
 
-/// A [`Result`] alias where the [`Err`] case is [`gfas::Error`].
+/// A [`Result`] alias where the [`Err`] case is [`crate::Error`].
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// The Errors that may occur when using the crate.

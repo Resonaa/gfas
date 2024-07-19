@@ -3,6 +3,12 @@ name = "gfas"
 version = "0.1.0"
 edition = "2021"
 description = "Sync GitHub followings to followers"
+license = "Unlicense"
+repository = "https://github.com/jwcub/gfas"
+homepage = "https://github.com/jwcub/gfas"
+keywords = ["cli", "async", "tool", "automation"]
+categories = ["command-line-utilities", "api-bindings"]
+authors = ["jwcub <jwcub@outlook.com>"]
 
 [dependencies]
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
