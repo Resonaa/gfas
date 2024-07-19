@@ -33,13 +33,14 @@ scheduled automatically with GitHub Actions.
 
 Prerequisites: Rust Toolchain
 
-```plaintext
+```sh
 $ cargo run --release -- [OPTIONS] --user <USER> --token <TOKEN>
 
 Options:
   -u, --user <USER>    Current user
   -t, --token <TOKEN>  Access token
-  -d, --dry            Dry run
+  -v, --verbose...     Increase logging verbosity
+  -q, --quiet...       Decrease logging verbosity
   -h, --help           Print help
 ```
 

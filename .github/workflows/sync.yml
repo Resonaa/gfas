@@ -17,4 +17,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Sync
-        run: cargo run --release -- -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }}
+        run: cargo run --release -- -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }} -vv
