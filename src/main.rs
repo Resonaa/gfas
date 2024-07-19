@@ -5,7 +5,7 @@ use tracing::level_filters::LevelFilter;
 
 /// CLI arguments
 #[derive(Parser, Debug)]
-#[command(about)]
+#[command(about, version)]
 struct Args {
     /// Current user
     #[arg(short, long)]

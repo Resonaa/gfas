@@ -5,7 +5,9 @@
 **G**itHub **F**ollowing **A**uto **S**ynchronization
 
 [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/jwcub/gfas/build.yml?style=flat-square)](https://github.com/jwcub/gfas/actions)
-[![License](https://img.shields.io/github/license/jwcub/gfas?style=flat-square&color=orange)](https://github.com/jwcub/gfas/blob/main/LICENSE)
+[![Crates.io](https://img.shields.io/crates/v/gfas?style=flat-square)](https://crates.io/crates/gfas)
+[![Downloads](https://img.shields.io/crates/d/gfas?style=flat-square)](https://crates.io/crates/gfas)
+[![License](https://img.shields.io/github/license/jwcub/gfas?style=flat-square)](https://github.com/jwcub/gfas/blob/main/LICENSE)
 [![GitHub repo size](https://img.shields.io/github/repo-size/jwcub/gfas?style=flat-square)](https://github.com/jwcub/gfas)
 [![GitHub Repo stars](https://img.shields.io/github/stars/jwcub/gfas?style=flat-square&color=yellow)](https://github.com/jwcub/gfas/stargazers)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/jwcub/gfas?style=flat-square)](https://github.com/jwcub/gfas/commits/main/)
@@ -31,10 +33,14 @@ scheduled automatically with GitHub Actions.
 
 ### CLI
 
-Prerequisites: Rust Toolchain
+#### Installing With Cargo
 
 ```sh
-$ cargo run --release -- [OPTIONS] --user <USER> --token <TOKEN>
+$ cargo install gfas
+$ gfas --help
+Sync GitHub followings to followers
+
+Usage: gfas.exe [OPTIONS] --user <USER> --token <TOKEN>
 
 Options:
   -u, --user <USER>    Current user
@@ -42,7 +48,35 @@ Options:
   -v, --verbose...     Increase logging verbosity
   -q, --quiet...       Decrease logging verbosity
   -h, --help           Print help
+  -V, --version        Print version
 ```
+
+#### Building From Source
+
+```sh
+$ git clone https://github.com/jwcub/gfas.git
+$ cd gfas
+$ cargo build --release
+$ ./target/release/gfas --help
+```
+
+### API
+
+This crate also exports some GitHub API bindings as a library which can be used to build your application.
+
+```sh
+$ cargo add gfas
+```
+
+```rust
+use gfas::GitHub;
+
+let github = GitHub::with_token("<TOKEN>")?;
+
+github.follow("<USER-TO-FOLLOW>").await?;
+```
+
+Refer to the [Documentation](https://docs.rs/gfas/latest/gfas/) for more information.
 
 ## Development
 
@@ -52,6 +86,7 @@ Before pushing your commits, be sure to run through all the checks:
 $ cargo clippy
 $ cargo fmt
 $ cargo build
+$ cargo doc --no-deps --lib
 ```
 
 ## License
