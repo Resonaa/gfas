@@ -18,7 +18,9 @@
 `gfas` synchronizes your GitHub followings to your followers. It runs on CLI and can be
 scheduled automatically with GitHub Actions.
 
-## Quick Start
+## Usage
+
+### GitHub Actions
 
 - Fork this repository.
 - Create a personal access token in GitHub settings (only `user:follow` is required).
@@ -27,19 +29,28 @@ scheduled automatically with GitHub Actions.
 - (Optional) Maybe you want to trigger the `Sync` workflow manually to see the effect.
 - You are ready to follow back  automatically!
 
-## CLI Usage
+### CLI
+
+Prerequisites: Rust Toolchain
 
 ```plaintext
-$ cargo run --release -- --help
-Sync GitHub followings to followers
-
-Usage: gfas.exe [OPTIONS] --user <USER> --token <TOKEN>
+$ cargo run --release -- [OPTIONS] --user <USER> --token <TOKEN>
 
 Options:
   -u, --user <USER>    Current user
   -t, --token <TOKEN>  Access token
   -d, --dry            Dry run
   -h, --help           Print help
+```
+
+## Development
+
+Before pushing your commits, be sure to run through all the checks:
+
+```sh
+$ cargo clippy
+$ cargo fmt
+$ cargo build
 ```
 
 ## License
