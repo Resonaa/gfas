@@ -25,15 +25,13 @@ scheduled automatically with GitHub Actions.
 ### GitHub Actions
 
 - Fork this repository.
-- Create a personal access token in GitHub settings (only `user:follow` is required).
-- Set the token as a secret named `TOKEN` of the repository.
+- Create a personal access token with the `user:follow` permission.
+- Set an action secret named `TOKEN` in the repository containing the token value.
+- You are ready to follow back automatically!
 - (Optional) Modify the scheduled time in `.github/workflow/sync.yml`. By default, it runs at 0 minutes past the hour every 6 hours.
 - (Optional) Maybe you want to trigger the `Sync` workflow manually to see the effect.
-- You are ready to follow back  automatically!
 
 ### CLI
-
-#### Installing With Cargo
 
 ```sh
 $ cargo install gfas
@@ -51,18 +49,9 @@ Options:
   -V, --version        Print version
 ```
 
-#### Building From Source
-
-```sh
-$ git clone https://github.com/jwcub/gfas.git
-$ cd gfas
-$ cargo build --release
-$ ./target/release/gfas --help
-```
-
 ### API
 
-This crate also exports some GitHub API bindings as a library which can be used to build your application.
+This crate also exports some GitHub API bindings which can be used to build your application.
 
 ```sh
 $ cargo add gfas
@@ -79,6 +68,15 @@ github.follow("<USER-TO-FOLLOW>").await?;
 Refer to the [Documentation](https://docs.rs/gfas/latest/gfas/) for more information.
 
 ## Development
+
+```sh
+$ git clone https://github.com/jwcub/gfas.git
+$ cd gfas
+$ cargo build --release
+$ ./target/release/gfas --help
+```
+
+## Contributing
 
 Before pushing your commits, be sure to run through all the checks:
 
