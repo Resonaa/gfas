@@ -1,16 +1,17 @@
 //! This crate exports some GitHub API bindings through [`GitHub`].
 
+use std::collections::HashSet;
+
 use futures_util::TryFutureExt;
 use reqwest::{header, Client, Response, Result};
 use serde::Deserialize;
-use std::collections::HashSet;
 use tracing::{instrument, warn, Level};
 
 /// Asynchronous GitHub API bindings that wraps a [`reqwest::Client`] internally,
 /// so it's safe and cheap to clone this struct and send it to different threads.
 #[derive(Debug, Clone)]
 pub struct GitHub {
-    client: Client,
+    client: Client
 }
 
 impl GitHub {
@@ -50,7 +51,7 @@ impl GitHub {
 
         #[derive(Deserialize)]
         struct User {
-            login: String,
+            login: String
         }
 
         const PER_PAGE: usize = 100;
@@ -88,10 +89,7 @@ impl GitHub {
     pub async fn follow(&self, user: &str) -> Result<Response> {
         warn!("{user}");
 
-        self.client
-            .put(format!("https://api.github.com/user/following/{user}"))
-            .send()
-            .await
+        self.client.put(format!("https://api.github.com/user/following/{user}")).send().await
     }
 
     /// Unfollows a user.
@@ -103,9 +101,6 @@ impl GitHub {
     pub async fn unfollow(&self, user: &str) -> Result<Response> {
         warn!("{user}");
 
-        self.client
-            .delete(format!("https://api.github.com/user/following/{user}"))
-            .send()
-            .await
+        self.client.delete(format!("https://api.github.com/user/following/{user}")).send().await
     }
 }

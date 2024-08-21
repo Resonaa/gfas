@@ -1,0 +1,4 @@
+trailing_comma = "Never"
+use_small_heuristics = "Max"
+imports_granularity = "Module"
+group_imports = "StdExternalCrate"

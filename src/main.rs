@@ -1,5 +1,6 @@
 use clap::Parser;
 use clap_verbosity_flag::{InfoLevel, Level, Verbosity};
+use futures::future;
 use gfas::GitHub;
 use tracing::level_filters::LevelFilter;
 
@@ -16,16 +17,12 @@ struct Args {
     token: String,
 
     #[command(flatten)]
-    verbose: Verbosity<InfoLevel>,
+    verbose: Verbosity<InfoLevel>
 }
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let Args {
-        token,
-        user,
-        verbose,
-    } = Args::parse();
+    let Args { token, user, verbose } = Args::parse();
 
     let filter = match verbose.log_level() {
         None => LevelFilter::OFF,
@@ -33,7 +30,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         Some(Level::Warn) => LevelFilter::WARN,
         Some(Level::Info) => LevelFilter::INFO,
         Some(Level::Debug) => LevelFilter::DEBUG,
-        _ => LevelFilter::TRACE,
+        _ => LevelFilter::TRACE
     };
 
     let subscriber = tracing_subscriber::fmt()
@@ -47,24 +44,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let github = GitHub::with_token(&token)?;
 
-    let (following, followers) = tokio::try_join!(
-        github.explore(&user, "following"),
-        github.explore(&user, "followers")
-    )?;
+    let (following, followers) =
+        tokio::try_join!(github.explore(&user, "following"), github.explore(&user, "followers"))?;
 
-    let unfollow_tasks = following.difference(&followers).cloned().map(|user| {
-        let github = github.clone();
-        tokio::spawn(async move { github.unfollow(&user).await })
-    });
-
-    let follow_tasks = followers.difference(&following).cloned().map(|user| {
-        let github = github.clone();
-        tokio::spawn(async move { github.follow(&user).await })
-    });
-
-    for task in unfollow_tasks.chain(follow_tasks) {
-        task.await??;
-    }
+    tokio::join!(
+        future::join_all(following.difference(&followers).map(|user| github.unfollow(user))),
+        future::join_all(followers.difference(&following).map(|user| github.follow(user)))
+    );
 
     Ok(())
 }
