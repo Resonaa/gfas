@@ -1,11 +1,10 @@
-pub use error::*;
+//! This crate exports some GitHub API bindings through [`GitHub`].
+
 use futures_util::TryFutureExt;
-use reqwest::{header, Client, Response};
+use reqwest::{header, Client, Response, Result};
 use serde::Deserialize;
 use std::collections::HashSet;
 use tracing::{instrument, warn, Level};
-
-pub mod error;
 
 /// Asynchronous GitHub API bindings that wraps a [`reqwest::Client`] internally,
 /// so it's safe and cheap to clone this struct and send it to different threads.
@@ -47,8 +46,6 @@ impl GitHub {
     pub async fn explore(&self, user: &str, role: &str) -> Result<HashSet<String>> {
         let mut res = HashSet::new();
 
-        const PER_PAGE: usize = 100;
-
         let url = format!("https://api.github.com/users/{user}/{role}");
 
         #[derive(Deserialize)]
@@ -56,8 +53,10 @@ impl GitHub {
             login: String,
         }
 
+        const PER_PAGE: usize = 100;
+
         for page in 1.. {
-            let users = self
+            let users: Vec<_> = self
                 .client
                 .get(&url)
                 .query(&[("page", page), ("per_page", PER_PAGE)])
@@ -66,7 +65,7 @@ impl GitHub {
                 .await?
                 .into_iter()
                 .map(|u| u.login)
-                .collect::<Vec<_>>();
+                .collect();
 
             let last = users.len() < PER_PAGE;
 
@@ -89,11 +88,10 @@ impl GitHub {
     pub async fn follow(&self, user: &str) -> Result<Response> {
         warn!("{user}");
 
-        Ok(self
-            .client
+        self.client
             .put(format!("https://api.github.com/user/following/{user}"))
             .send()
-            .await?)
+            .await
     }
 
     /// Unfollows a user.
@@ -105,10 +103,9 @@ impl GitHub {
     pub async fn unfollow(&self, user: &str) -> Result<Response> {
         warn!("{user}");
 
-        Ok(self
-            .client
+        self.client
             .delete(format!("https://api.github.com/user/following/{user}"))
             .send()
-            .await?)
+            .await
     }
 }

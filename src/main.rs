@@ -1,6 +1,6 @@
 use clap::Parser;
 use clap_verbosity_flag::{InfoLevel, Level, Verbosity};
-use gfas::{GitHub, Result};
+use gfas::GitHub;
 use tracing::level_filters::LevelFilter;
 
 /// CLI arguments
@@ -20,7 +20,7 @@ struct Args {
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let Args {
         token,
         user,
@@ -47,27 +47,18 @@ async fn main() -> Result<()> {
 
     let github = GitHub::with_token(&token)?;
 
-    let [task_1, task_2] = ["following", "followers"].map(|role| {
+    let (following, followers) = tokio::try_join!(
+        github.explore(&user, "following"),
+        github.explore(&user, "followers")
+    )?;
+
+    let unfollow_tasks = following.difference(&followers).cloned().map(|user| {
         let github = github.clone();
-        let user = user.clone();
-        let role = role.to_owned();
-
-        tokio::spawn(async move { github.explore(&user, &role).await })
-    });
-    let following = task_1.await??;
-    let followers = task_2.await??;
-
-    let unfollow_tasks = following.difference(&followers).map(|user| {
-        let github = github.clone();
-        let user = user.clone();
-
         tokio::spawn(async move { github.unfollow(&user).await })
     });
 
-    let follow_tasks = followers.difference(&following).map(|user| {
+    let follow_tasks = followers.difference(&following).cloned().map(|user| {
         let github = github.clone();
-        let user = user.clone();
-
         tokio::spawn(async move { github.follow(&user).await })
     });
 

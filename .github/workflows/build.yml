@@ -4,10 +4,6 @@ on:
   push:
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
     strategy:
@@ -20,8 +16,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build
-        run: cargo run --verbose -- -h
+      - name: Dev Build
+        run: cargo build --verbose
+
+      - name: Release Build
+        run: cargo build --release --verbose
 
       - name: Doc
         run: cargo doc --no-deps --lib
