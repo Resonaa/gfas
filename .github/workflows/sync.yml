@@ -11,6 +11,7 @@ concurrency:
 
 jobs:
   sync:
+    name: Sync
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

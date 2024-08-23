@@ -4,7 +4,7 @@
 
 **G**itHub **F**ollowing **A**uto **S**ynchronization
 
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/jwcub/gfas/build.yml?style=flat-square)](https://github.com/jwcub/gfas/actions)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/jwcub/gfas/ci.yml?style=flat-square)](https://github.com/jwcub/gfas/actions)
 [![Crates.io](https://img.shields.io/crates/v/gfas-cli?style=flat-square)](https://crates.io/crates/gfas-cli)
 [![Downloads](https://img.shields.io/crates/d/gfas-cli?style=flat-square)](https://crates.io/crates/gfas-cli)
 [![License](https://img.shields.io/github/license/jwcub/gfas?style=flat-square)](https://github.com/jwcub/gfas/blob/main/LICENSE)

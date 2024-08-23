@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   build:
+    name: Build
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -29,6 +30,7 @@ jobs:
         run: cargo doc --no-deps
 
   clippy:
+    name: Clippy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,6 +39,7 @@ jobs:
         run: cargo clippy
 
   format:
+    name: Format
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -54,3 +57,20 @@ jobs:
           fi
           git commit -m "chore: format"
           git push
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install cargo-tarpaulin
+        run: cargo install cargo-tarpaulin
+      - name: Gather coverage
+        run: cargo tarpaulin --output-dir coverage --out xml --workspace
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          files: ./coverage/cobertura.xml
