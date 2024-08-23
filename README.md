@@ -69,22 +69,24 @@ github.follow("<USER-TO-FOLLOW>").await?;
 
 ## Development
 
+### Building from Source
+
 ```sh
 $ git clone https://github.com/jwcub/gfas.git
 $ cd gfas
-$ cargo run --release -- --help
+$ cargo run -- --help
 ```
 
-## Contributing
+### Pre-commit Hooks
 
-Before pushing your commits, be sure to run through all the checks:
+Use [pre-commit](https://pre-commit.com) to manage Git pre-commit hooks:
 
 ```sh
-$ cargo clippy
-$ cargo fmt
-$ cargo build
-$ cargo doc --no-deps
+$ pip install pre-commit
+$ pre-commit install
 ```
+
+### Coverage
 
 Use [cargo-tarpaulin](https://crates.io/crates/cargo-tarpaulin) to generate coverage results:
 
