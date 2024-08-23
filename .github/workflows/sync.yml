@@ -12,10 +12,8 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Sync
         run: cargo run --release -- -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }} -vv
