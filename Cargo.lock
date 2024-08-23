@@ -366,16 +366,24 @@ dependencies = [
 ]
 
 [[package]]
-name = "gfas"
-version = "2.0.2"
+name = "gfas-api"
+version = "0.1.0"
+dependencies = [
+ "futures",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "gfas-cli"
+version = "0.1.0"
 dependencies = [
  "clap",
  "clap-verbosity-flag",
  "futures",
- "futures-util",
- "reqwest",
- "serde",
- "serde_json",
+ "gfas-api",
  "tokio",
  "tracing",
  "tracing-subscriber",
@@ -1074,9 +1082,9 @@ dependencies = [
 
 [[package]]
 name = "system-configuration"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "658bc6ee10a9b4fcf576e9b0819d95ec16f4d2c02d39fd83ac1c8789785c4a42"
+checksum = "3c879d448e9d986b661742763247d3693ed13609438cf3d006f51f5368a5ba6b"
 dependencies = [
  "bitflags",
  "core-foundation",

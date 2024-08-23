@@ -2,7 +2,7 @@
 
 use std::collections::HashSet;
 
-use futures_util::TryFutureExt;
+use futures::TryFutureExt;
 use reqwest::{header, Client, Response, Result};
 use serde::Deserialize;
 use tracing::{instrument, warn, Level};

@@ -5,8 +5,8 @@
 **G**itHub **F**ollowing **A**uto **S**ynchronization
 
 [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/jwcub/gfas/build.yml?style=flat-square)](https://github.com/jwcub/gfas/actions)
-[![Crates.io](https://img.shields.io/crates/v/gfas?style=flat-square)](https://crates.io/crates/gfas)
-[![Downloads](https://img.shields.io/crates/d/gfas?style=flat-square)](https://crates.io/crates/gfas)
+[![Crates.io](https://img.shields.io/crates/v/gfas-cli?style=flat-square)](https://crates.io/crates/gfas-cli)
+[![Downloads](https://img.shields.io/crates/d/gfas-cli?style=flat-square)](https://crates.io/crates/gfas-cli)
 [![License](https://img.shields.io/github/license/jwcub/gfas?style=flat-square)](https://github.com/jwcub/gfas/blob/main/LICENSE)
 [![GitHub repo size](https://img.shields.io/github/repo-size/jwcub/gfas?style=flat-square)](https://github.com/jwcub/gfas)
 [![GitHub Repo stars](https://img.shields.io/github/stars/jwcub/gfas?style=flat-square&color=yellow)](https://github.com/jwcub/gfas/stargazers)
@@ -34,7 +34,7 @@ scheduled automatically with GitHub Actions.
 ### CLI
 
 ```sh
-$ cargo install gfas
+$ cargo install gfas-cli
 $ gfas --help
 Sync GitHub followings to followers
 
@@ -51,29 +51,28 @@ Options:
 
 ### API
 
-This crate also exports some GitHub API bindings which can be used to build your application.
+The `gfas-api` crate exports some GitHub API bindings which can be used to build your application.
 
 ```sh
-$ cargo add gfas
+$ cargo add gfas-api
 ```
 
 ```rust
-use gfas::GitHub;
+use gfas_api::GitHub;
 
 let github = GitHub::with_token("<TOKEN>")?;
 
 github.follow("<USER-TO-FOLLOW>").await?;
 ```
 
-Refer to the [Documentation](https://docs.rs/gfas/latest/gfas/) for more information.
+Refer to the [Documentation](https://docs.rs/gfas/latest/gfas-api/) for more information.
 
 ## Development
 
 ```sh
 $ git clone https://github.com/jwcub/gfas.git
 $ cd gfas
-$ cargo build --release
-$ ./target/release/gfas --help
+$ cargo run --release -- --help
 ```
 
 ## Contributing
@@ -84,7 +83,7 @@ Before pushing your commits, be sure to run through all the checks:
 $ cargo clippy
 $ cargo fmt
 $ cargo build
-$ cargo doc --no-deps --lib
+$ cargo doc --no-deps
 ```
 
 ## License

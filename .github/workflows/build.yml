@@ -23,4 +23,4 @@ jobs:
         run: cargo build --release --verbose
 
       - name: Doc
-        run: cargo doc --no-deps --lib
+        run: cargo doc --no-deps

@@ -1,7 +1,7 @@
 use clap::Parser;
 use clap_verbosity_flag::{InfoLevel, Level, Verbosity};
 use futures::future;
-use gfas::GitHub;
+use gfas_api::GitHub;
 use tracing::level_filters::LevelFilter;
 
 /// CLI arguments
