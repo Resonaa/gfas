@@ -5,6 +5,8 @@
 **G**itHub **F**ollowing **A**uto **S**ynchronization
 
 [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/jwcub/gfas/ci.yml?style=flat-square)](https://github.com/jwcub/gfas/actions)
+[![Coverage](https://img.shields.io/codecov/c/github/jwcub/gfas?token=W3H6GBVQZW&style=flat-square
+)](https://app.codecov.io/github/jwcub/gfas)
 [![Crates.io](https://img.shields.io/crates/v/gfas-cli?style=flat-square)](https://crates.io/crates/gfas-cli)
 [![Downloads](https://img.shields.io/crates/d/gfas-cli?style=flat-square)](https://crates.io/crates/gfas-cli)
 [![License](https://img.shields.io/github/license/jwcub/gfas?style=flat-square)](https://github.com/jwcub/gfas/blob/main/LICENSE)
@@ -82,6 +84,13 @@ $ cargo clippy
 $ cargo fmt
 $ cargo build
 $ cargo doc --no-deps
+```
+
+Use [cargo-tarpaulin](https://crates.io/crates/cargo-tarpaulin) to generate coverage results:
+
+```sh
+$ cargo install cargo-tarpaulin
+$ cargo tarpaulin --output-dir coverage --out xml --workspace
 ```
 
 ## License
