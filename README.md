@@ -18,17 +18,17 @@
 ## Overview
 
 `gfas` synchronizes your GitHub followings to your followers. It runs on CLI and can be
-scheduled automatically with GitHub Actions.
+scheduled automatically with [GitHub Actions](https://docs.github.com/actions).
 
 ## Usage
 
 ### GitHub Actions
 
 - Fork this repository.
-- Create a personal access token with the `user:follow` permission.
-- Set an action secret named `TOKEN` in the repository containing the token value.
+- Create a [personal access token](https://docs.github.com/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with the `user:follow` permission.
+- Create an [secret](https://docs.github.com/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) named `TOKEN` in the repository containing the token value.
 - You are ready to follow back automatically!
-- (Optional) Modify the scheduled time in `.github/workflow/sync.yml`. By default, it runs at 0 minutes past the hour every 6 hours.
+- (Optional) Modify the [scheduled time](https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule) in `.github/workflow/sync.yml`. By default, it runs at 0 minutes past the hour every 6 hours.
 - (Optional) Maybe you want to trigger the `Sync` workflow manually to see the effect.
 
 ### CLI
@@ -51,7 +51,7 @@ Options:
 
 ### API
 
-The `gfas-api` crate exports some GitHub API bindings which can be used to build your application.
+The [gfas-api](https://crates.io/crates/gfas-api) crate exports some [GitHub API bindings](https://docs.rs/gfas-api) which can be used to build your application.
 
 ```sh
 $ cargo add gfas-api
@@ -64,8 +64,6 @@ let github = GitHub::with_token("<TOKEN>")?;
 
 github.follow("<USER-TO-FOLLOW>").await?;
 ```
-
-Refer to the [Documentation](https://docs.rs/gfas/latest/gfas-api/) for more information.
 
 ## Development
 
