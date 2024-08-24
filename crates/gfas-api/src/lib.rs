@@ -5,7 +5,7 @@ use std::collections::HashSet;
 use futures::TryFutureExt;
 use reqwest::{header, Client, Response, Result};
 use serde::Deserialize;
-use tracing::{instrument, warn, Level};
+use tracing::{debug, info, instrument, warn, Level};
 
 /// Asynchronous GitHub API bindings that wraps a [`reqwest::Client`] internally,
 /// so it's safe and cheap to clone this struct and send it to different threads.
@@ -43,7 +43,7 @@ impl GitHub {
     /// # Errors
     ///
     /// Fails if an error occurs during sending requests.
-    #[instrument(skip(self), ret(level = Level::DEBUG), err)]
+    #[instrument(skip(self), ret(level = Level::TRACE), err)]
     pub async fn explore(&self, user: &str, role: &str) -> Result<HashSet<String>> {
         let mut res = HashSet::new();
 
@@ -57,6 +57,8 @@ impl GitHub {
         const PER_PAGE: usize = 100;
 
         for page in 1.. {
+            debug!("page {page}");
+
             let users: Vec<_> = self
                 .client
                 .get(&url)
@@ -68,11 +70,13 @@ impl GitHub {
                 .map(|u| u.login)
                 .collect();
 
-            let last = users.len() < PER_PAGE;
+            let len = users.len();
 
             res.extend(users);
 
-            if last {
+            info!("{}(+{len})", res.len());
+
+            if len < PER_PAGE {
                 break;
             }
         }
@@ -85,9 +89,9 @@ impl GitHub {
     /// # Errors
     ///
     /// Fails if an error occurs during sending the request.
-    #[instrument(skip_all, ret(level = Level::DEBUG), err)]
+    #[instrument(skip(self), ret(level = Level::TRACE), err)]
     pub async fn follow(&self, user: &str) -> Result<Response> {
-        warn!("{user}");
+        warn!("");
 
         self.client.put(format!("https://api.github.com/user/following/{user}")).send().await
     }
@@ -97,9 +101,9 @@ impl GitHub {
     /// # Errors
     ///
     /// Fails if an error occurs during sending the request.
-    #[instrument(skip_all, ret(level = Level::DEBUG), err)]
+    #[instrument(skip(self), ret(level = Level::TRACE), err)]
     pub async fn unfollow(&self, user: &str) -> Result<Response> {
-        warn!("{user}");
+        warn!("");
 
         self.client.delete(format!("https://api.github.com/user/following/{user}")).send().await
     }
