@@ -1,0 +1,84 @@
+name: Bug Report
+description: An issue with gfas or any of its crates (gfas-cli, gfas-api, etc.).
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please review the [existing issues](https://github.com/jwcub/gfas/issues) before filing a bug. Here are some common errors you may encounter:
+
+        * `Error: reqwest::Error { kind: Decode, source: Error("invalid type: map, expected a sequence", line: 1, column: 0) }`: This is not a bug. It's very likely that you have provided an invalid token.
+
+  - type: checkboxes
+    id: issue-not-common
+    attributes:
+      label: Please tick this box to confirm you have reviewed the above.
+      options:
+        - label: I have a different issue.
+          required: true
+
+  - type: textarea
+    id: gfas-version
+    attributes:
+      label: What version of gfas are you using?
+      description: Enter the output of `gfas --version`.
+      placeholder: ex. gfas 0.2.1
+    validations:
+      required: true
+
+  - type: textarea
+    id: operating-system
+    attributes:
+      label: What operating system are you using gfas on?
+      description: Enter the name and version of your operating system (or workflow runner if you are using GitHub Actions).
+      placeholder: ex. Debian 12.0, macOS 13.4.1
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe your bug.
+      description: Give a high level description of the bug.
+      placeholder: ex. gfas fails to synchronize when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: What are the steps to reproduce the behavior?
+      description: |
+        If possible, please include your CLI arguments with token stripped. Unless the bug is very obvious, then it is unlikely that it will be fixed if the gfas maintainers cannot reproduce it.
+      placeholder: >
+        ex. Run `gfas -u jwcub -t <stripped>`
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: What is the actual behavior?
+      description: |
+        Show the command you ran and the actual output. **Include the `-vv` flag in your invocation of gfas.**
+
+        If the output is large, put it in a gist: <https://gist.github.com/>
+
+        If the output is small, put it in code fences (see placeholder text).
+      placeholder: |
+        ex.
+        ```
+        $ gfas -u jwcub -t <stripped> -vv
+        2024-08-25T12:29:38.546807Z DEBUG explore: page 1 user="jwcub" role="following"
+        ...
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: What is the expected behavior?
+      description: What do you think gfas should have done?
+      placeholder: ex. gfas should have followed 2 users and unfollowed 1 user
+    validations:
+      required: true
