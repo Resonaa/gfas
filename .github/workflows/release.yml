@@ -18,7 +18,8 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Get the release version from the tag
         if: env.VERSION == ''
         run: echo "VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
@@ -121,14 +122,20 @@ jobs:
             target: i686-pc-windows-msvc
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install packages (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         shell: bash
         run: |
-          ci/ubuntu-install-packages
+          if ! command -V sudo; then
+            apt-get update
+            apt-get install -y --no-install-recommends sudo
+            fi
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+          zsh xz-utils liblz4-tool musl-tools brotli zstd
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
@@ -263,7 +270,7 @@ jobs:
       PCRE2_SYS_STATIC: 1
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install packages (Ubuntu)
