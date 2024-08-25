@@ -14,7 +14,7 @@ jobs:
     name: Sync
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Install gfas
+        run: cargo install gfas-cli
       - name: Sync
-        run: cargo run --release -- -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }} -vv
+        run: gfas -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }} -vv
