@@ -1,6 +1,6 @@
 ---
-name: Feature request
-about: Suggest a new feature for gfas
+name: Feature Request
+about: Suggest a new feature for gfas.
 title: ""
 labels: ""
 assignees: ""
