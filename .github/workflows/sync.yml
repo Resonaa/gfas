@@ -17,4 +17,4 @@ jobs:
       - name: Install gfas
         run: cargo install gfas-cli
       - name: Sync
-        run: gfas -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }} -vv
+        run: gfas sync -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }} -vv

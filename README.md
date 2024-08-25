@@ -32,10 +32,10 @@ named `TOKEN` in the repository containing the token value.
 
 ```sh
 $ cargo install gfas-cli
-$ gfas -u <your-username> -t <your-token>
+$ gfas sync -u <your-username> -t <your-token>
 ```
 
-Run `gfas --help` for all options.
+Run `gfas --help` for all commands and options.
 
 ### API
 

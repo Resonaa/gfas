@@ -18,7 +18,9 @@ doc = false
 
 [dependencies]
 gfas-api = { version = "0.2.2", path = "../gfas-api" }
+anyhow = { workspace = true }
 clap = { workspace = true }
+clap_mangen = { workspace = true }
 clap-verbosity-flag = { workspace = true }
 futures = { workspace = true }
 tokio = { workspace = true }

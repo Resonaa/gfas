@@ -50,7 +50,7 @@ body:
       description: |
         If possible, please include your CLI arguments with token stripped. Unless the bug is very obvious, then it is unlikely that it will be fixed if the gfas maintainers cannot reproduce it.
       placeholder: >
-        ex. Run `gfas -u jwcub -t <stripped>`
+        ex. Run `gfas sync -u jwcub -t <stripped>`
     validations:
       required: true
 
@@ -67,7 +67,7 @@ body:
       placeholder: |
         ex.
         ```
-        $ gfas -u jwcub -t <stripped> -vv
+        $ gfas sync -u jwcub -t <stripped> -vv
         2024-08-25T12:29:38.546807Z DEBUG explore: page 1 user="jwcub" role="following"
         ...
         ```

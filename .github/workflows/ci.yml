@@ -13,19 +13,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+  doc:
+    name: Doc
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Dev Build
-        run: cargo build --verbose
-      - name: Release Build
-        run: cargo build --release --verbose
       - name: Doc
         run: cargo doc --no-deps
 
