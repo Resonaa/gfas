@@ -325,14 +325,15 @@ jobs:
         run: |
           cargo deb -p gfas-cli --target ${{ env.TARGET }} --verbose
           version="${{ needs.create-release.outputs.version }}"
-          echo "DEB_DIR=target/${{ env.TARGET }}/debian" >> $GITHUB_ENV
-          echo "DEB_NAME=./gfas_$version-1_amd64.deb" >> $GITHUB_ENV
+          DEB_DIR=./target/${{ env.TARGET }}/debian
+          DEB_NAME=$(ls $DEB_DIR | grep .deb)
+          echo "DEB_DIR=$DEB_DIR" >> $GITHUB_ENV
+          echo "DEB_NAME=./$DEB_NAME" >> $GITHUB_ENV
 
       - name: Create sha256 sum of deb file
         shell: bash
         run: |
           cd "$DEB_DIR"
-          ls
           sum="$DEB_NAME.sha256"
           shasum -a 256 "$DEB_NAME" > "$sum"
           echo "SUM=$sum" >> $GITHUB_ENV
