@@ -385,7 +385,7 @@ dependencies = [
 
 [[package]]
 name = "gfas-api"
-version = "0.2.1"
+version = "0.2.2"
 dependencies = [
  "futures",
  "reqwest",
@@ -396,7 +396,7 @@ dependencies = [
 
 [[package]]
 name = "gfas-cli"
-version = "0.2.1"
+version = "0.2.2"
 dependencies = [
  "clap",
  "clap-verbosity-flag",
