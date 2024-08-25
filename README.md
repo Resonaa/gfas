@@ -45,6 +45,7 @@ Usage: gfas.exe [OPTIONS] --user <USER> --token <TOKEN>
 Options:
   -u, --user <USER>    Current user
   -t, --token <TOKEN>  Access token
+      --no-color       Disable color printing
   -v, --verbose...     Increase logging verbosity
   -q, --quiet...       Decrease logging verbosity
   -h, --help           Print help
