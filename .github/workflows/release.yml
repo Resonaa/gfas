@@ -323,7 +323,7 @@ jobs:
       - name: Build release binary
         shell: bash
         run: |
-          cargo deb -p gfas-cli --target ${{ env.TARGET }}
+          cargo deb -p gfas-cli --target ${{ env.TARGET }} --verbose
           version="${{ needs.create-release.outputs.version }}"
           echo "DEB_DIR=target/${{ env.TARGET }}/debian" >> $GITHUB_ENV
           echo "DEB_NAME=./gfas_$version-1_amd64.deb" >> $GITHUB_ENV
@@ -332,6 +332,7 @@ jobs:
         shell: bash
         run: |
           cd "$DEB_DIR"
+          ls
           sum="$DEB_NAME.sha256"
           shasum -a 256 "$DEB_NAME" > "$sum"
           echo "SUM=$sum" >> $GITHUB_ENV
