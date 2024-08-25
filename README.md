@@ -17,7 +17,7 @@ and unfollow back automatically. It runs on CLI and can be scheduled with
 ### GitHub Actions
 
 - Copy-paste the
-[Sync](.github/workflow/sync.yml)
+[Sync](.github/workflows/sync.yml)
 workflow to any of your repositories. You can just fork this repository for convenience.
 - Create a
 [personal access token](https://docs.github.com/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
