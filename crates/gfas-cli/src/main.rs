@@ -1,5 +1,3 @@
-#![feature(async_closure)]
-
 use std::env;
 use std::io::{stderr, stdout, IsTerminal};
 
@@ -27,6 +25,30 @@ struct Flags {
 
     #[command(flatten)]
     verbose: Verbosity<InfoLevel>
+}
+
+async fn run(user: &str, token: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let github = GitHub::with_token(token)?;
+
+    let (following, followers) =
+        tokio::try_join!(github.explore(user, "following"), github.explore(user, "followers"))?;
+
+    let tracker = TaskTracker::new();
+
+    following.difference(&followers).cloned().for_each(|user| {
+        let github = github.clone();
+        tracker.spawn(async move { github.unfollow(&user).await });
+    });
+
+    followers.difference(&following).cloned().for_each(|user| {
+        let github = github.clone();
+        tracker.spawn(async move { github.follow(&user).await });
+    });
+
+    tracker.close();
+    tracker.wait().await;
+
+    Ok(())
 }
 
 #[tokio::main]
@@ -62,34 +84,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         tracing::subscriber::set_global_default(subscriber)?;
     }
 
-    let main_task = async || {
-        let github = GitHub::with_token(&token)?;
-
-        let (following, followers) = tokio::try_join!(
-            github.explore(&user, "following"),
-            github.explore(&user, "followers")
-        )?;
-
-        let tracker = TaskTracker::new();
-
-        following.difference(&followers).cloned().for_each(|user| {
-            let github = github.clone();
-            tracker.spawn(async move { github.unfollow(&user).await });
-        });
-
-        followers.difference(&following).cloned().for_each(|user| {
-            let github = github.clone();
-            tracker.spawn(async move { github.follow(&user).await });
-        });
-
-        tracker.close();
-        tracker.wait().await;
-
-        Ok::<(), Box<dyn std::error::Error>>(())
-    };
-
     tokio::select! {
         res = tokio::signal::ctrl_c() => Ok(res?),
-        res = main_task() => res
+        res = run(&user, &token) => res
     }
 }
