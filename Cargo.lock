@@ -401,7 +401,7 @@ dependencies = [
 
 [[package]]
 name = "gfas-api"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "futures",
  "reqwest",
@@ -412,7 +412,7 @@ dependencies = [
 
 [[package]]
 name = "gfas-cli"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "anyhow",
  "clap",
