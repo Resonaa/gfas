@@ -1,4 +1,9 @@
 repos:
+  - repo: https://github.com/crate-ci/committed
+    rev: v1.0.20
+    hooks:
+      - id: committed
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
