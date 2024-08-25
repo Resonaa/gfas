@@ -26,5 +26,5 @@ Use [cargo-release](https://crates.io/crates/cargo-release) to automate release 
 
 ```sh
 $ cargo install cargo-release
-$ cargo release <LEVEL> --workspace --tag-name "v{{version}}"
+$ cargo release <LEVEL> --workspace
 ```
