@@ -28,7 +28,7 @@ jobs:
           echo "version is: $VERSION"
       - name: Create GitHub release
         env:
-          GH_TOKEN: ${{ secrets.TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: gh release create $VERSION --verify-tag --title $VERSION --generate-notes
     outputs:
       version: ${{ env.VERSION }}
@@ -252,7 +252,7 @@ jobs:
 
       - name: Upload release archive
         env:
-          GH_TOKEN: ${{ secrets.TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           version="${{ needs.create-release.outputs.version }}"
@@ -338,7 +338,7 @@ jobs:
 
       - name: Upload release archive
         env:
-          GH_TOKEN: ${{ secrets.TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           cd "$DEB_DIR"
