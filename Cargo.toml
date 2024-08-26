@@ -6,11 +6,11 @@ resolver = "2"
 edition = "2021"
 description = "Sync GitHub followings to followers"
 license = "Unlicense"
-repository = "https://github.com/resonaa/gfas"
-homepage = "https://github.com/resonaa/gfas"
+repository = "https://github.com/Resonaa/gfas"
+homepage = "https://github.com/Resonaa/gfas"
 keywords = ["github", "follow", "follower", "following", "sync"]
 categories = ["command-line-utilities", "api-bindings"]
-authors = ["resonaa <resonaa@outlook.com>"]
+authors = ["Resonaa <resonaa@outlook.com>"]
 rust-version = "1.75"
 
 [workspace.dependencies]
