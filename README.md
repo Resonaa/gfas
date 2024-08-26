@@ -5,33 +5,32 @@ GitHub following list to match your followers, enabling you to follow back
 and unfollow back automatically. It runs on CLI and can be scheduled with
 [GitHub Actions](https://docs.github.com/actions).
 
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/jwcub/gfas/ci.yml?style=flat-square)](https://github.com/jwcub/gfas/actions)
-[![Coverage](https://img.shields.io/codecov/c/github/jwcub/gfas?token=W3H6GBVQZW&style=flat-square
-)](https://app.codecov.io/github/jwcub/gfas)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/resonaa/gfas/ci.yml?style=flat-square)](https://github.com/resonaa/gfas/actions)
+[![Coverage](https://img.shields.io/codecov/c/github/resonaa/gfas?token=W3H6GBVQZW&style=flat-square)](https://app.codecov.io/github/resonaa/gfas)
 [![Crates.io](https://img.shields.io/crates/v/gfas-cli?style=flat-square)](https://crates.io/crates/gfas-cli)
 [![Downloads](https://img.shields.io/crates/d/gfas-cli?style=flat-square)](https://crates.io/crates/gfas-cli)
-[![License](https://img.shields.io/github/license/jwcub/gfas?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/github/license/resonaa/gfas?style=flat-square)](LICENSE)
 
 ## Usage
 
 ### GitHub Actions
 
 - Copy-paste the
-[Sync](.github/workflows/sync.yml)
-workflow to any of your repositories. You can just fork this repository for convenience.
+  [Sync](.github/workflows/sync.yml)
+  workflow to any of your repositories. You can just fork this repository for convenience.
 - Create a
-[personal access token](https://docs.github.com/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
-with the `user:follow` permission.
+  [personal access token](https://docs.github.com/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+  with the `user:follow` permission.
 - Create an
-[secret](https://docs.github.com/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)
-named `TOKEN` in the repository containing the token value.
+  [secret](https://docs.github.com/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)
+  named `TOKEN` in the repository containing the token value.
 - Customize your workflow, e.g. modify the [scheduled time](https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule) (defaults to every 6 hours).
 - Maybe you want to trigger it manually to see the effect.
 
 ### CLI
 
 **[Archives of precompiled binaries for gfas are available for Windows,
-macOS and Linux.](https://github.com/jwcub/gfas/releases)** Linux and
+macOS and Linux.](https://github.com/resonaa/gfas/releases)** Linux and
 Windows binaries are static executables. Users of platforms not explicitly
 mentioned below are advised to download one of these archives.
 
@@ -83,7 +82,7 @@ the latest stable release of the Rust compiler.
 To build gfas:
 
 ```sh
-$ git clone https://github.com/jwcub/gfas
+$ git clone https://github.com/resonaa/gfas
 $ cd gfas
 $ cargo build --release
 $ ./target/release/gfas help

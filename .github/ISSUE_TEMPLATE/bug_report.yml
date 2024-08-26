@@ -4,7 +4,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please review the [existing issues](https://github.com/jwcub/gfas/issues) before filing a bug. Here are some common errors you may encounter:
+        Please review the [existing issues](https://github.com/resonaa/gfas/issues) before filing a bug. Here are some common errors you may encounter:
 
         * `Error: reqwest::Error { kind: Decode, source: Error("invalid type: map, expected a sequence", line: 1, column: 0) }`: This is not a bug. It's very likely that you have provided an invalid token.
 
@@ -50,7 +50,7 @@ body:
       description: |
         If possible, please include your CLI arguments with token stripped. Unless the bug is very obvious, then it is unlikely that it will be fixed if the gfas maintainers cannot reproduce it.
       placeholder: >
-        ex. Run `gfas sync -u jwcub -t <stripped>`
+        ex. Run `gfas sync -u resonaa -t <stripped>`
     validations:
       required: true
 
@@ -67,8 +67,8 @@ body:
       placeholder: |
         ex.
         ```
-        $ gfas sync -u jwcub -t <stripped> -vv
-        2024-08-25T12:29:38.546807Z DEBUG explore: page 1 user="jwcub" role="following"
+        $ gfas sync -u resonaa -t <stripped> -vv
+        2024-08-25T12:29:38.546807Z DEBUG explore: page 1 user="resonaa" role="following"
         ...
         ```
     validations:
