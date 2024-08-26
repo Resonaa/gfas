@@ -2,37 +2,38 @@
 
 use std::collections::HashSet;
 
+use derive_builder::Builder;
 use futures::TryFutureExt;
 use reqwest::{header, Client, Response, Result};
 use serde::Deserialize;
 use tracing::{debug, info, instrument, warn, Level};
+use url::Url;
 
-/// Asynchronous GitHub API bindings that wraps a [`reqwest::Client`] internally,
-/// so it's safe and cheap to clone this struct and send it to different threads.
-#[derive(Debug, Clone)]
+/// Asynchronous GitHub API bindings that wraps a [`reqwest::Client`] internally.
+#[derive(Debug, Clone, Builder)]
 pub struct GitHub {
-    client: Client
+    #[builder(
+        setter(name = "token", into),
+        field(
+            ty = "String",
+            build = r#"
+                let mut headers = header::HeaderMap::new();
+                headers.insert("User-Agent", header::HeaderValue::from_static("gfas"));
+                headers.insert("Authorization", format!("token {}", self.client).parse().unwrap());
+                Client::builder().default_headers(headers).build().unwrap()
+            "#
+        )
+    )]
+    client: Client,
+
+    #[builder]
+    endpoint: Url
 }
 
 impl GitHub {
-    /// Creates a new [`GitHub`] interface with personal access token.
-    ///
-    /// # Panics
-    ///
-    /// Panics if the argument contains invalid header value characters.
-    ///
-    /// # Errors
-    ///
-    /// Fails if a TLS backend cannot be initialized, or the resolver
-    /// cannot load the system configuration.
-    pub fn with_token(token: &str) -> Result<Self> {
-        let mut headers = header::HeaderMap::new();
-        headers.insert("User-Agent", header::HeaderValue::from_static("gfas"));
-        headers.insert("Authorization", format!("token {token}").parse().unwrap());
-
-        let client = Client::builder().default_headers(headers).build()?;
-
-        Ok(Self { client })
+    /// Alias for [`GitHubBuilder::create_empty()`].
+    pub fn builder() -> GitHubBuilder {
+        GitHubBuilder::create_empty()
     }
 
     /// Paginates through the given user profile link and returns
@@ -47,7 +48,7 @@ impl GitHub {
     pub async fn explore(&self, user: &str, role: &str) -> Result<HashSet<String>> {
         let mut res = HashSet::new();
 
-        let url = format!("https://api.github.com/users/{user}/{role}");
+        let url = self.endpoint.join(&format!("users/{user}/{role}")).unwrap();
 
         #[derive(Deserialize)]
         struct User {
@@ -61,7 +62,7 @@ impl GitHub {
 
             let users: Vec<_> = self
                 .client
-                .get(&url)
+                .get(url.clone())
                 .query(&[("page", page), ("per_page", PER_PAGE)])
                 .send()
                 .and_then(|r| r.json::<Vec<User>>())
@@ -93,7 +94,8 @@ impl GitHub {
     pub async fn follow(&self, user: &str) -> Result<Response> {
         warn!("");
 
-        self.client.put(format!("https://api.github.com/user/following/{user}")).send().await
+        let url = self.endpoint.join(&format!("/user/following/{user}")).unwrap();
+        self.client.put(url).send().await
     }
 
     /// Unfollows a user.
@@ -105,6 +107,7 @@ impl GitHub {
     pub async fn unfollow(&self, user: &str) -> Result<Response> {
         warn!("");
 
-        self.client.delete(format!("https://api.github.com/user/following/{user}")).send().await
+        let url = self.endpoint.join(&format!("/user/following/{user}")).unwrap();
+        self.client.delete(url).send().await
     }
 }

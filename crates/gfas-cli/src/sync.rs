@@ -1,6 +1,7 @@
-use clap::Args;
+use clap::{Args, ValueHint};
 use gfas_api::GitHub;
 use tokio_util::task::TaskTracker;
+use url::Url;
 
 /// Flags used in the sync subcommand
 #[derive(Args, Debug)]
@@ -11,14 +12,19 @@ pub struct SyncFlags {
 
     /// Access token
     #[arg(short, long)]
-    token: String
+    token: String,
+
+    /// GitHub API endpoint
+    #[arg(long, value_name = "URL", default_value = "https://api.github.com",
+    value_hint = ValueHint::Url)]
+    endpoint: Url
 }
 
-async fn run(user: &str, token: &str) -> anyhow::Result<()> {
-    let github = GitHub::with_token(token)?;
+async fn run(SyncFlags { user, token, endpoint }: SyncFlags) -> anyhow::Result<()> {
+    let github = GitHub::builder().token(token).endpoint(endpoint).build()?;
 
     let (following, followers) =
-        tokio::try_join!(github.explore(user, "following"), github.explore(user, "followers"))?;
+        tokio::try_join!(github.explore(&user, "following"), github.explore(&user, "followers"))?;
 
     let tracker = TaskTracker::new();
 
@@ -39,9 +45,9 @@ async fn run(user: &str, token: &str) -> anyhow::Result<()> {
 }
 
 /// Synchronizes followings.
-pub async fn sync(SyncFlags { user, token }: SyncFlags) -> anyhow::Result<()> {
+pub async fn sync(flags: SyncFlags) -> anyhow::Result<()> {
     tokio::select! {
         res = tokio::signal::ctrl_c() => Ok(res?),
-        res = run(&user, &token) => res
+        res = run(flags) => res
     }
 }

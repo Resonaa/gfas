@@ -30,12 +30,28 @@ named `TOKEN` in the repository containing the token value.
 
 ### CLI
 
-```sh
-$ cargo install gfas-cli
-$ gfas sync -u <your-username> -t <your-token>
+**[Archives of precompiled binaries for gfas are available for Windows,
+macOS and Linux.](https://github.com/jwcub/gfas/releases)** Linux and
+Windows binaries are static executables. Users of platforms not explicitly
+mentioned below are advised to download one of these archives.
+
+If you're a **Rust programmer**, gfas can be installed with `cargo`.
+Note that the minimum supported version of Rust for gfas is **1.75.0**,
+although gfas may work with older versions.
+
+```
+$ cargo install gfas
 ```
 
-Run `gfas --help` for all commands and options.
+Alternatively, one can use [`cargo
+binstall`](https://github.com/cargo-bins/cargo-binstall) to install a gfas
+binary directly from GitHub:
+
+```
+$ cargo binstall gfas
+```
+
+After installation, run `gfas --help` for all commands and options.
 
 ### API
 
@@ -52,17 +68,25 @@ $ cargo add gfas-api
 ```rust
 use gfas_api::GitHub;
 
-let github = GitHub::with_token("<TOKEN>")?;
+let github = GitHub::builder().token("<TOKEN>").endpoint("https://api.github.com").build()?;
 
 github.follow("<USER-TO-FOLLOW>").await?;
 ```
 
-## Development
+## Building
+
+gfas is written in Rust, so you'll need to grab a
+[Rust installation](https://www.rust-lang.org/) in order to compile it.
+gfas compiles with Rust 1.72.0 (stable) or newer. In general, gfas tracks
+the latest stable release of the Rust compiler.
+
+To build gfas:
 
 ```sh
-$ git clone https://github.com/jwcub/gfas.git
+$ git clone https://github.com/jwcub/gfas
 $ cd gfas
-$ cargo run -- --help
+$ cargo build --release
+$ ./target/release/gfas help
 ```
 
 ## Contributing
