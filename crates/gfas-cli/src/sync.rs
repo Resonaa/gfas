@@ -1,5 +1,18 @@
+use clap::Args;
 use gfas_api::GitHub;
 use tokio_util::task::TaskTracker;
+
+/// Flags used in the sync subcommand
+#[derive(Args, Debug)]
+pub struct SyncFlags {
+    /// Current user
+    #[arg(short, long)]
+    user: String,
+
+    /// Access token
+    #[arg(short, long)]
+    token: String
+}
 
 async fn run(user: &str, token: &str) -> anyhow::Result<()> {
     let github = GitHub::with_token(token)?;
@@ -26,9 +39,9 @@ async fn run(user: &str, token: &str) -> anyhow::Result<()> {
 }
 
 /// Synchronizes followings.
-pub async fn sync(user: &str, token: &str) -> anyhow::Result<()> {
+pub async fn sync(SyncFlags { user, token }: SyncFlags) -> anyhow::Result<()> {
     tokio::select! {
         res = tokio::signal::ctrl_c() => Ok(res?),
-        res = run(user, token) => res
+        res = run(&user, &token) => res
     }
 }

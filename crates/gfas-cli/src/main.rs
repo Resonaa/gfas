@@ -14,6 +14,6 @@ async fn main() -> anyhow::Result<()> {
 
     match command {
         Commands::Generate { mode } => generate::generate(mode),
-        Commands::Sync { user, token } => sync::sync(&user, &token).await
+        Commands::Sync { flags } => sync::sync(flags).await
     }
 }

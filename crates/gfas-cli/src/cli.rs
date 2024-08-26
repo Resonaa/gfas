@@ -1,5 +1,8 @@
-use clap::{Parser, Subcommand, ValueEnum};
+use clap::{Parser, Subcommand};
 use clap_verbosity_flag::{InfoLevel, Verbosity};
+
+use crate::generate::GenerateMode;
+use crate::sync::SyncFlags;
 
 /// CLI arguments
 #[derive(Parser, Debug)]
@@ -21,13 +24,8 @@ pub struct Cli {
 pub enum Commands {
     /// Sync followings
     Sync {
-        /// Current user
-        #[arg(short, long)]
-        user: String,
-
-        /// Access token
-        #[arg(short, long)]
-        token: String
+        #[command(flatten)]
+        flags: SyncFlags
     },
 
     /// Generate man page or shell completions
@@ -35,23 +33,4 @@ pub enum Commands {
         /// The thing to generate
         mode: GenerateMode
     }
-}
-
-/// The thing to generate via the generate subcommand
-#[derive(Clone, Copy, Debug, Eq, PartialEq, ValueEnum)]
-pub enum GenerateMode {
-    /// Raw roff used for the man page
-    Man,
-
-    /// Completions for bash
-    CompleteBash,
-
-    /// Completions for zsh
-    CompleteZsh,
-
-    /// Completions for fish
-    CompleteFish,
-
-    /// Completions for PowerShell
-    CompletePowerShell
 }
