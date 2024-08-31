@@ -1,0 +1,3 @@
+bin.name = "gfas"
+args = "generate man"
+stderr = ""

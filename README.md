@@ -88,6 +88,17 @@ $ cargo build --release
 $ ./target/release/gfas help
 ```
 
+### Running tests
+
+gfas is relatively well-tested, including both unit tests and integration
+tests. To run the full test suite, use:
+
+```
+$ cargo test
+```
+
+from the repository root.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
