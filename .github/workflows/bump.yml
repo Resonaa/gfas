@@ -27,8 +27,8 @@ jobs:
         run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
       - name: Setup git
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          echo ${{ secrets.TOKEN }} | gh auth login --with-token
+          gh auth setup-git
           git add .
       - name: Patch release
         run: cargo release patch --workspace --no-verify --no-confirm --execute
