@@ -65,9 +65,9 @@ $ cargo add gfas-api
 ```
 
 ```rust
-use gfas_api::GitHub;
+use gfas_api::{BuilderExt, GitHub};
 
-let github = GitHub::builder().token("<TOKEN>").endpoint("https://api.github.com").build()?;
+let github = GitHub::builder().token("<TOKEN>").endpoint("https://api.github.com".parse()?)?;
 
 github.follow("<USER-TO-FOLLOW>").await?;
 ```

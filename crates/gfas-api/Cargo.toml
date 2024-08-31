@@ -13,10 +13,8 @@ authors.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-derive_builder = { workspace = true }
 futures = { workspace = true }
+octokit-rs = { workspace = true }
 reqwest = { workspace = true }
-serde = { workspace = true }
-serde_json = { workspace = true }
 tracing = { workspace = true }
 url = { workspace = true }

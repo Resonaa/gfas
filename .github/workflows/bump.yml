@@ -31,7 +31,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .
       - name: Patch release
-        run: cargo release patch --workspace --no-verify --no-confirm --execute
+        run: cargo release patch --workspace --no-confirm --execute
       - name: Trigger release workflow
         shell: bash
         env:

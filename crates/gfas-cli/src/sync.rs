@@ -1,5 +1,5 @@
 use clap::{Args, ValueHint};
-use gfas_api::GitHub;
+use gfas_api::{BuilderExt, GitHub};
 use tokio_util::task::TaskTracker;
 use url::Url;
 
@@ -21,7 +21,7 @@ pub struct SyncFlags {
 }
 
 async fn run(SyncFlags { user, token, endpoint }: SyncFlags) -> anyhow::Result<()> {
-    let github = GitHub::builder().token(token).endpoint(endpoint).build()?;
+    let github = GitHub::builder().token(&token).endpoint(endpoint)?;
 
     let (following, followers) =
         tokio::try_join!(github.explore(&user, "following"), github.explore(&user, "followers"))?;
