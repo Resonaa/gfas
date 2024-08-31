@@ -1,6 +1,6 @@
 [package]
 name = "gfas-api"
-version = "0.4.9"
+version = "0.5.0"
 readme = "../../README.md"
 edition.workspace = true
 description.workspace = true
