@@ -91,7 +91,7 @@ impl GitHub {
                 .get(url.clone())
                 .query(&[("page", page), ("per_page", PER_PAGE)])
                 .send()
-                .and_then(|r| r.json::<Vec<octokit_rs::webhook::User>>())
+                .and_then(|r| r.json::<Vec<octocrab::models::SimpleUser>>())
                 .await?
                 .into_iter()
                 .map(|u| u.login)

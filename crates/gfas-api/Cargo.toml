@@ -14,7 +14,7 @@ rust-version.workspace = true
 
 [dependencies]
 futures = { workspace = true }
-octokit-rs = { workspace = true }
+octocrab = { workspace = true }
 reqwest = { workspace = true }
 tracing = { workspace = true }
 url = { workspace = true }
