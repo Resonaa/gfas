@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install pre-commit
-        uses: pip3 install pre-commit
+        run: pip3 install pre-commit
       - name: Update pre-commit config
         run: pre-commit autoupdate
       - name: Commit
