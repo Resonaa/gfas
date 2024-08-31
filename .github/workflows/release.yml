@@ -1,10 +1,11 @@
 name: Release
 
-# Only do the release on vx.y.z tags.
 on:
   push:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
+
+  workflow_dispatch:
 
 # We need this to be able to create releases.
 permissions:

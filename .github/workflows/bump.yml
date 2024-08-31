@@ -25,22 +25,17 @@ jobs:
         run: cargo install cargo-release
       - name: Log in to crates.io
         run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
-      - name: Install jq
-        run: sudo apt install jq
-      - name: Get owner info
-        shell: bash
-        run: |
-          USER_INFO=$(curl -s -H "Authorization: token ${{ secrets.TOKEN }}" https://api.github.com/user)
-          USER_EMAIL=$(echo "$USER_INFO" | jq -r ".email")
-          echo "GIT_EMAIL=$USER_EMAIL" >> $GITHUB_ENV
       - name: Setup git
         run: |
-          echo ${{ secrets.TOKEN }} | gh auth login --with-token
-          gh auth setup-git
-          git config --local user.email ${{ env.GIT_EMAIL }}
-          git config --local user.name ${{ github.repository_owner }}
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add .
       - name: Patch release
-        run: cargo release patch --workspace --no-verify --no-confirm --no-push --execute
-      - name: Push
-        run: gh repo sync --force
+        run: cargo release patch --workspace --no-verify --no-confirm --execute
+      - name: Trigger release workflow
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION = $(grep '^version =' ./crates/gfas-api/Cargo.toml | sed 's/^version = "//; s/"$//')
+          gh workflow run release.yml --ref v$VERSION
