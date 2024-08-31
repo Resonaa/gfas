@@ -62,6 +62,7 @@ jobs:
       - name: Coverage
         run: cargo tarpaulin --output-dir coverage --out xml --workspace
       - name: Upload
+        if: github.ref == 'refs/heads/main'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
