@@ -2,6 +2,15 @@
 
 Thanks for your interest in contributing to gfas!
 
+## Formatting
+
+Use [Rustfmt](https://github.com/rust-lang/rustfmt) to format Rust code:
+
+```sh
+$ rustup component add rustfmt --toolchain nightly
+$ cargo +nightly fmt
+```
+
 ## Pre-commit Hooks
 
 Use [pre-commit](https://pre-commit.com) to manage Git pre-commit hooks:

@@ -16,9 +16,9 @@ jobs:
     steps:
       - name: Setup Rust toolchain
         run: rustup toolchain install stable --profile minimal --no-self-update
-      - name: Install gfas
-        run: cargo install gfas-cli
       - name: Rust cache
         uses: Swatinem/rust-cache@v2
+      - name: Install gfas
+        run: cargo install gfas-cli
       - name: Sync
         run: gfas sync -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }} -vv
