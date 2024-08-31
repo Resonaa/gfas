@@ -16,8 +16,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
       - name: Install pre-commit
-        run: pip3 install pre-commit
+        run: python -m pip install pre-commit
       - name: Update pre-commit config
         run: pre-commit autoupdate
       - name: Commit
