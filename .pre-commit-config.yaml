@@ -31,7 +31,7 @@ repos:
 
       - id: rustfmt
         name: rustfmt
-        entry: cargo fmt
+        entry: cargo +nightly fmt
         language: system
         files: none
         always_run: true
@@ -42,8 +42,3 @@ repos:
         language: system
         files: none
         always_run: true
-
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.17.0
-    hooks:
-      - id: pyupgrade
