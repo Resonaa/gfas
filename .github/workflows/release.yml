@@ -237,7 +237,7 @@ jobs:
             "$PWD/target:/target:Z" \
             "ghcr.io/cross-rs/${{ matrix.target }}:main" \
             "${{ matrix.qemu }}" "/$BIN" \
-              -generate bash > "$ARCHIVE/complete/gfas.bash"
+              generate bash > "$ARCHIVE/complete/gfas.bash"
           docker run --rm -v \
             "$PWD/target:/target:Z" \
             "ghcr.io/cross-rs/${{ matrix.target }}:main" \
