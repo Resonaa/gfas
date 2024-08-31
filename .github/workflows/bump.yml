@@ -43,4 +43,4 @@ jobs:
       - name: Patch release
         run: cargo release patch --workspace --no-verify --no-confirm --no-push --execute
       - name: Push
-        run: gh repo sync
+        run: gh repo sync --force
