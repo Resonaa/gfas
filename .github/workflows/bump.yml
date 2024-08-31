@@ -37,5 +37,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          VERSION = $(grep 'version =' ./crates/gfas-api/Cargo.toml | sed 's/.*version = "\(.*\)".*/\1/')
+          VERSION=$(grep 'version =' ./crates/gfas-api/Cargo.toml | sed 's/.*version = "\(.*\)".*/\1/')
           gh workflow run release.yml --ref v$VERSION
