@@ -1,6 +1,6 @@
 [package]
 name = "gfas-cli"
-version = "0.5.0"
+version = "0.5.1"
 readme = "../../README.md"
 edition.workspace = true
 description.workspace = true
@@ -18,7 +18,7 @@ path = "src/main.rs"
 doc = false
 
 [dependencies]
-gfas-api = { version = "0.5.0", path = "../gfas-api" }
+gfas-api = { version = "0.5.1", path = "../gfas-api" }
 anyhow = { workspace = true }
 clap = { workspace = true }
 clap_complete = { workspace = true }

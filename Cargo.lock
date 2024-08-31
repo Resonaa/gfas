@@ -522,7 +522,7 @@ dependencies = [
 
 [[package]]
 name = "gfas-api"
-version = "0.5.0"
+version = "0.5.1"
 dependencies = [
  "futures",
  "octocrab",
@@ -533,7 +533,7 @@ dependencies = [
 
 [[package]]
 name = "gfas-cli"
-version = "0.5.0"
+version = "0.5.1"
 dependencies = [
  "anyhow",
  "clap",
