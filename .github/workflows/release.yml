@@ -208,14 +208,19 @@ jobs:
           cp "$BIN" "$ARCHIVE"/
           cp {README.md,LICENSE} "$ARCHIVE"/
 
-      - name: Generate man page (no emulation)
+      - name: Generate man page and completions (no emulation)
         if: matrix.qemu == ''
         shell: bash
         run: |
           "$BIN" --version
           "$BIN" generate man > "$ARCHIVE/doc/gfas.1"
+          "$BIN" generate bash > "$ARCHIVE/complete/gfas.bash"
+          "$BIN" generate fish > "$ARCHIVE/complete/gfas.fish"
+          "$BIN" generate ps > "$ARCHIVE/complete/_gfas.ps1"
+          "$BIN" generate zsh > "$ARCHIVE/complete/_gfas"
+          "$BIN" generate elvish > "$ARCHIVE/complete/gfas.elv"
 
-      - name: Generate man page (emulation)
+      - name: Generate man page and completions (emulation)
         if: matrix.qemu != ''
         shell: bash
         run: |
@@ -228,6 +233,31 @@ jobs:
             "ghcr.io/cross-rs/${{ matrix.target }}:main" \
             "${{ matrix.qemu }}" "/$BIN" \
               generate man > "$ARCHIVE/doc/gfas.1"
+          docker run --rm -v \
+            "$PWD/target:/target:Z" \
+            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
+            "${{ matrix.qemu }}" "/$BIN" \
+              -generate bash > "$ARCHIVE/complete/gfas.bash"
+          docker run --rm -v \
+            "$PWD/target:/target:Z" \
+            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
+            "${{ matrix.qemu }}" "/$BIN" \
+              generate fish > "$ARCHIVE/complete/gfas.fish"
+          docker run --rm -v \
+            "$PWD/target:/target:Z" \
+            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
+            "${{ matrix.qemu }}" "/$BIN" \
+              generate ps > "$ARCHIVE/complete/_gfas.ps1"
+          docker run --rm -v \
+            "$PWD/target:/target:Z" \
+            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
+            "${{ matrix.qemu }}" "/$BIN" \
+              generate zsh > "$ARCHIVE/complete/_gfas"
+          docker run --rm -v \
+            "$PWD/target:/target:Z" \
+            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
+            "${{ matrix.qemu }}" "/$BIN" \
+              generate elvish > "$ARCHIVE/complete/gfas.elv"
 
       - name: Build archive (Windows)
         shell: bash
@@ -312,6 +342,14 @@ jobs:
         shell: bash
         run: |
           "$BIN" generate man > "$DEPLOY_DIR/gfas.1"
+
+      - name: Generate shell completions
+        shell: bash
+        run: |
+          "$BIN" generate bash > "$DEPLOY_DIR/gfas.bash"
+          "$BIN" generate fish > "$DEPLOY_DIR/gfas.fish"
+          "$BIN" generate elvish > "$DEPLOY_DIR/gfas.elv"
+          "$BIN" generate zsh > "$DEPLOY_DIR/_gfas"
 
       - name: Build release binary
         shell: bash

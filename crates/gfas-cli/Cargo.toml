@@ -21,6 +21,7 @@ doc = false
 gfas-api = { version = "0.4.9", path = "../gfas-api" }
 anyhow = { workspace = true }
 clap = { workspace = true }
+clap_complete = { workspace = true }
 clap_mangen = { workspace = true }
 clap-verbosity-flag = { workspace = true }
 futures = { workspace = true }

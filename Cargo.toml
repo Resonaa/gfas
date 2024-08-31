@@ -16,6 +16,7 @@ rust-version = "1.75"
 [workspace.dependencies]
 anyhow = "1.0.86"
 clap = { version = "4.5.16", features = ["derive"] }
+clap_complete = "4.5.24"
 clap_mangen = "0.2.23"
 clap-verbosity-flag = "2.2.1"
 futures = "0.3.30"
@@ -74,6 +75,26 @@ assets = [
     [
         "./deployment/deb/gfas.1",
         "/usr/share/man/man1/gfas.1",
+        "644",
+    ],
+    [
+        "deployment/deb/gfas.bash",
+        "/usr/share/bash-completion/completions/gfas",
+        "644",
+    ],
+    [
+        "deployment/deb/gfas.fish",
+        "/usr/share/fish/vendor_completions.d/gfas.fish",
+        "644",
+    ],
+    [
+        "deployment/deb/_gfas",
+        "/usr/share/zsh/vendor-completions/",
+        "644",
+    ],
+    [
+        "deployment/deb/gfas.elv",
+        "/usr/share/.elvish/completions/",
         "644",
     ],
 ]
