@@ -1,0 +1,4 @@
+[coverage]
+out = ["Xml"]
+output-dir = "./target/coverage"
+skip-clean = true

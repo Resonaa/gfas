@@ -26,7 +26,7 @@ Use [cargo-tarpaulin](https://crates.io/crates/cargo-tarpaulin) to generate cove
 
 ```sh
 $ cargo install cargo-tarpaulin
-$ cargo tarpaulin --output-dir coverage --out xml --workspace
+$ cargo tarpaulin
 ```
 
 ## Releasing
@@ -35,5 +35,5 @@ Use [cargo-release](https://crates.io/crates/cargo-release) to automate release 
 
 ```sh
 $ cargo install cargo-release
-$ cargo release <LEVEL> --workspace
+$ cargo release <LEVEL>
 ```

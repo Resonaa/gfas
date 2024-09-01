@@ -78,10 +78,10 @@ jobs:
       - name: Install cargo-tarpaulin
         run: cargo install cargo-tarpaulin
       - name: Coverage
-        run: cargo tarpaulin --output-dir coverage --out xml --workspace
+        run: cargo tarpaulin
       - name: Upload
         if: github.ref == 'refs/heads/main'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/cobertura.xml
+          files: ./target/coverage/cobertura.xml
