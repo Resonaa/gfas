@@ -13,8 +13,5 @@ authors.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-futures = { workspace = true }
-octocrab = { workspace = true }
-reqwest = { workspace = true }
+octorust = { workspace = true }
 tracing = { workspace = true }
-url = { workspace = true }

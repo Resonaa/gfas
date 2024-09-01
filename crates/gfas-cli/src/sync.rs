@@ -1,7 +1,6 @@
-use clap::{Args, ValueHint};
-use gfas_api::{BuilderExt, GitHub};
+use clap::Args;
+use gfas_api::GitHub;
 use tokio_util::task::TaskTracker;
-use url::Url;
 
 /// Flags used in the sync subcommand
 #[derive(Args, Debug)]
@@ -15,27 +14,27 @@ pub struct SyncFlags {
     token: String,
 
     /// GitHub API endpoint
-    #[arg(long, value_name = "URL", default_value = "https://api.github.com",
-    value_hint = ValueHint::Url)]
-    endpoint: Url
+    #[arg(long, value_name = "URL", default_value = "https://api.github.com")]
+    endpoint: String
 }
 
 async fn run(SyncFlags { user, token, endpoint }: SyncFlags) -> anyhow::Result<()> {
-    let github = GitHub::builder().token(&token).endpoint(endpoint)?;
+    let mut github = GitHub::new(token)?;
+    github.with_host_override(endpoint);
 
     let (following, followers) =
-        tokio::try_join!(github.explore(&user, "following"), github.explore(&user, "followers"))?;
+        tokio::try_join!(github.explore(&user, true), github.explore(&user, false))?;
 
     let tracker = TaskTracker::new();
 
     following.difference(&followers).cloned().for_each(|user| {
-        let github = github.clone();
-        tracker.spawn(async move { github.unfollow(&user).await });
+        let users = github.users();
+        tracker.spawn(async move { users.unfollow(&user).await });
     });
 
     followers.difference(&following).cloned().for_each(|user| {
-        let github = github.clone();
-        tracker.spawn(async move { github.follow(&user).await });
+        let users = github.users();
+        tracker.spawn(async move { users.follow(&user).await });
     });
 
     tracker.close();

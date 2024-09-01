@@ -3,103 +3,74 @@
 use std::collections::HashSet;
 use std::ops::{Deref, DerefMut};
 
-use futures::TryFutureExt;
-use reqwest::{header, Client, ClientBuilder, Response, Result};
-use tracing::{debug, info, instrument, warn, Level};
-use url::Url;
+use octorust::auth::Credentials;
+use octorust::Client;
+use tracing::{info, instrument, Level};
 
-/// Extension for [`reqwest::ClientBuilder`].
-pub trait BuilderExt {
-    /// Sets the GitHub token for every request.
-    fn token(self, token: &str) -> Self;
+type Result<T> = std::result::Result<T, octorust::ClientError>;
 
-    /// Builds the GitHub client with API endpoint url.
-    fn endpoint(self, endpoint: Url) -> Result<GitHub>;
-}
-
-impl BuilderExt for ClientBuilder {
-    fn token(self, token: &str) -> Self {
-        let mut headers = header::HeaderMap::new();
-        headers.insert("User-Agent", header::HeaderValue::from_static("gfas"));
-        headers.insert("Authorization", format!("token {token}").parse().unwrap());
-        self.default_headers(headers)
-    }
-
-    fn endpoint(self, endpoint: Url) -> Result<GitHub> {
-        Ok(GitHub { client: self.build()?, endpoint })
-    }
-}
-
-/// Asynchronous GitHub API bindings that wraps a [`reqwest::Client`] internally.
+/// Asynchronous GitHub API bindings that wraps [`octorust::Client`] internally.
 ///
 /// # Examples
 ///
 /// ```rust
-/// use gfas_api::{BuilderExt, GitHub};
+/// use gfas_api::GitHub;
 ///
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
-/// let github = GitHub::builder().token("<token>").endpoint("https://api.github.com".parse()?)?;
+/// let github = GitHub::new(String::from("<TOKEN>"))?;
 /// # Ok(())
 /// # }
 /// ```
-#[derive(Debug, Clone)]
-pub struct GitHub {
-    client: Client,
-    endpoint: Url
-}
+#[derive(Clone)]
+#[repr(transparent)]
+pub struct GitHub(Client);
 
 impl Deref for GitHub {
     type Target = Client;
 
     fn deref(&self) -> &Self::Target {
-        &self.client
+        &self.0
     }
 }
 
 impl DerefMut for GitHub {
     fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.client
+        &mut self.0
     }
 }
 
 impl GitHub {
-    /// Alias for [`reqwest::ClientBuilder::new()`].
-    pub fn builder() -> ClientBuilder {
-        ClientBuilder::new()
+    /// Create a new GitHub API client.
+    pub fn new(token: String) -> Result<Self> {
+        Ok(Self(Client::new("gfas", Credentials::Token(token))?))
     }
 
     /// Paginates through the given user profile link and returns
-    /// discovered users collected in [`HashSet`].
-    ///
-    /// `role` should be either `"following"` or `"followers"`.
+    /// discovered followings/followers collected in [`HashSet`].
     ///
     /// # Errors
     ///
     /// Fails if an error occurs during sending requests.
     #[instrument(skip(self), ret(level = Level::TRACE), err)]
-    pub async fn explore(&self, user: &str, role: &str) -> Result<HashSet<String>> {
+    pub async fn explore(&self, user: &str, following: bool) -> Result<HashSet<String>> {
         let mut res = HashSet::new();
 
-        let url = self.endpoint.join(&format!("users/{user}/{role}")).unwrap();
+        const PER_PAGE: i64 = 100;
 
-        const PER_PAGE: usize = 100;
+        let users = self.users();
 
         for page in 1.. {
-            debug!("page {page}");
+            let response = if following {
+                users.list_following_for_user(user, PER_PAGE, page).await
+            } else {
+                users.list_followers_for_user(user, PER_PAGE, page).await
+            }?;
 
-            let users: Vec<_> = self
-                .get(url.clone())
-                .query(&[("page", page), ("per_page", PER_PAGE)])
-                .send()
-                .and_then(|r| r.json::<Vec<octocrab::models::SimpleUser>>())
-                .await?
-                .into_iter()
-                .map(|u| u.login)
-                .collect();
+            let explored = response.body.into_iter().map(|u| u.login);
 
-            let len = users.len();
+            let len = explored.len() as i64;
 
-            res.extend(users);
+            res.extend(explored);
 
             info!("{}(+{len})", res.len());
 
@@ -109,31 +80,5 @@ impl GitHub {
         }
 
         Ok(res)
-    }
-
-    /// Follows a user.
-    ///
-    /// # Errors
-    ///
-    /// Fails if an error occurs during sending the request.
-    #[instrument(skip(self), ret(level = Level::TRACE), err)]
-    pub async fn follow(&self, user: &str) -> Result<Response> {
-        warn!("");
-
-        let url = self.endpoint.join(&format!("/user/following/{user}")).unwrap();
-        self.put(url).send().await
-    }
-
-    /// Unfollows a user.
-    ///
-    /// # Errors
-    ///
-    /// Fails if an error occurs during sending the request.
-    #[instrument(skip(self), ret(level = Level::TRACE), err)]
-    pub async fn unfollow(&self, user: &str) -> Result<Response> {
-        warn!("");
-
-        let url = self.endpoint.join(&format!("/user/following/{user}")).unwrap();
-        self.delete(url).send().await
     }
 }

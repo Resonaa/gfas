@@ -50,7 +50,7 @@ binary directly from GitHub:
 $ cargo binstall gfas
 ```
 
-After installation, run `gfas --help` for all commands and options.
+After installation, run `gfas help` for all commands and options.
 
 ### API
 
@@ -65,11 +65,11 @@ $ cargo add gfas-api
 ```
 
 ```rust
-use gfas_api::{BuilderExt, GitHub};
+use gfas_api::GitHub;
 
-let github = GitHub::builder().token("<TOKEN>").endpoint("https://api.github.com".parse()?)?;
+let github = GitHub::new(String::from("<TOKEN>"))?;
 
-github.follow("<USER-TO-FOLLOW>").await?;
+github.explore("<USER-TO-EXPLORE>", true).await?;
 ```
 
 ## Building

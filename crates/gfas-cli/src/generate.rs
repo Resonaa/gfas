@@ -28,7 +28,7 @@ pub enum GenerateMode {
     PowerShell
 }
 
-fn complete<G: Generator>(gen: G, mut cmd: Command) {
+fn complete(gen: impl Generator, mut cmd: Command) {
     let bin_name = cmd.get_name().to_string();
     generate_completions(gen, &mut cmd, bin_name, &mut io::stdout());
 }
