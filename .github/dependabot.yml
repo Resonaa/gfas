@@ -4,8 +4,20 @@ updates:
     directory: /
     schedule:
       interval: daily
+    reviewers:
+      - Resonaa
+    groups:
+      all:
+        patterns:
+          - "*"
 
   - package-ecosystem: cargo
     directory: /
     schedule:
       interval: daily
+    reviewers:
+      - Resonaa
+    groups:
+      all:
+        patterns:
+          - "*"
