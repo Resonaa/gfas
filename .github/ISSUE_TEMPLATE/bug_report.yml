@@ -50,7 +50,7 @@ body:
       description: |
         If possible, please include your CLI arguments with token stripped. Unless the bug is very obvious, then it is unlikely that it will be fixed if the gfas maintainers cannot reproduce it.
       placeholder: >
-        ex. Run `gfas sync -u Resonaa -t <stripped>`
+        ex. Run `gfas sync -t <stripped>`
     validations:
       required: true
 
@@ -67,8 +67,8 @@ body:
       placeholder: |
         ex.
         ```
-        $ gfas sync -u Resonaa -t <stripped> -vv
-        2024-08-25T12:29:38.546807Z DEBUG explore: page 1 user="Resonaa" role="following"
+        $ gfas sync -t <stripped> -vv
+        2024-09-06T14:38:03.572556Z  INFO current user: Resonaa
         ...
         ```
     validations:

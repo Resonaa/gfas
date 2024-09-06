@@ -3,9 +3,10 @@ use std::io::{self, IsTerminal};
 
 use clap_verbosity_flag::{InfoLevel, Level, Verbosity};
 use tracing::level_filters::LevelFilter;
+use tracing::subscriber::{set_global_default, SetGlobalDefaultError};
 
 /// Sets up tracing filter and subscriber.
-pub fn setup(verbose: Verbosity<InfoLevel>, no_color: bool) -> anyhow::Result<()> {
+pub fn setup(verbose: Verbosity<InfoLevel>, no_color: bool) -> Result<(), SetGlobalDefaultError> {
     let filter = match verbose.log_level() {
         None => LevelFilter::OFF,
         Some(Level::Error) => LevelFilter::ERROR,
@@ -31,7 +32,5 @@ pub fn setup(verbose: Verbosity<InfoLevel>, no_color: bool) -> anyhow::Result<()
         .with_writer(io::stderr)
         .finish();
 
-    tracing::subscriber::set_global_default(subscriber)?;
-
-    Ok(())
+    set_global_default(subscriber)
 }

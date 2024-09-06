@@ -23,4 +23,6 @@ jobs:
       - name: Rust cache
         uses: Swatinem/rust-cache@v2
       - name: Sync
-        run: cargo run --release -- sync -u ${{ github.repository_owner }} -t ${{ secrets.TOKEN }} -vv
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        run: cargo run --release -- sync -vv

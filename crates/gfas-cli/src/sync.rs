@@ -1,16 +1,13 @@
 use clap::Args;
 use gfas_api::GitHub;
 use tokio_util::task::TaskTracker;
+use tracing::info;
 
 /// Flags used in the sync subcommand
 #[derive(Args, Debug)]
 pub struct SyncFlags {
-    /// Current user
-    #[arg(short, long)]
-    user: String,
-
     /// Access token
-    #[arg(short, long)]
+    #[arg(env = "GITHUB_TOKEN")]
     token: String,
 
     /// GitHub API endpoint
@@ -18,9 +15,13 @@ pub struct SyncFlags {
     endpoint: String
 }
 
-async fn run(SyncFlags { user, token, endpoint }: SyncFlags) -> anyhow::Result<()> {
+async fn run(SyncFlags { token, endpoint }: SyncFlags) -> anyhow::Result<()> {
     let mut github = GitHub::new(token)?;
     github.with_host_override(endpoint);
+
+    let user = github.users().get_authenticated_public_user().await?.body.login;
+
+    info!("current user: {user}");
 
     let (following, followers) =
         tokio::try_join!(github.explore(&user, true), github.explore(&user, false))?;
