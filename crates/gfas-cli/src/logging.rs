@@ -6,6 +6,7 @@ use tracing::level_filters::LevelFilter;
 use tracing::subscriber::{set_global_default, SetGlobalDefaultError};
 
 /// Sets up tracing filter and subscriber.
+#[cfg(not(tarpaulin_include))]
 pub fn setup(verbose: Verbosity<InfoLevel>, no_color: bool) -> Result<(), SetGlobalDefaultError> {
     let filter = match verbose.log_level() {
         None => LevelFilter::OFF,
