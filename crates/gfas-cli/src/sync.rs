@@ -3,7 +3,7 @@ use gfas_api::GitHub;
 use tokio_util::task::TaskTracker;
 use tracing::info;
 
-/// Flags used in the sync subcommand
+/// Flags used in the sync subcommand.
 #[derive(Args, Debug)]
 pub struct SyncFlags {
     /// Access token

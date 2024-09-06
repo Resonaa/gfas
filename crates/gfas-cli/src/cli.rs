@@ -4,7 +4,7 @@ use clap_verbosity_flag::{InfoLevel, Verbosity};
 use crate::generate::GenerateMode;
 use crate::sync::SyncFlags;
 
-/// CLI arguments
+/// CLI arguments.
 #[derive(Parser, Debug)]
 #[command(about, version)]
 pub struct Cli {
@@ -19,7 +19,7 @@ pub struct Cli {
     pub command: Commands
 }
 
-/// CLI subcommands
+/// CLI subcommands.
 #[derive(Subcommand, Debug)]
 pub enum Commands {
     /// Sync followings

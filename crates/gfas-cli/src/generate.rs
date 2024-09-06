@@ -5,7 +5,7 @@ use clap_complete::aot::{generate as generate_completions, Generator, Shell};
 
 use crate::cli::Cli;
 
-/// The thing to generate via the generate subcommand
+/// The thing to generate via the generate subcommand.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, ValueEnum)]
 pub enum GenerateMode {
     /// Raw roff used for the man page
