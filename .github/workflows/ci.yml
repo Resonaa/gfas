@@ -78,7 +78,7 @@ jobs:
       - name: Install cargo-tarpaulin
         run: cargo install cargo-tarpaulin
       - name: Coverage
-        run: cargo tarpaulin
+        run: cargo tarpaulin -v
       - name: Upload
         if: github.ref == 'refs/heads/main'
         uses: codecov/codecov-action@v4
