@@ -1,4 +1,11 @@
+exclude: ^docs/.*
+fail_fast: true
+
 repos:
+  - repo: meta
+    hooks:
+      - id: check-useless-excludes
+
   - repo: https://github.com/crate-ci/committed
     rev: v1.0.20
     hooks:
@@ -22,23 +29,9 @@ repos:
 
   - repo: local
     hooks:
-      - id: clippy
-        name: clippy
-        entry: cargo clippy
-        language: system
-        files: none
-        always_run: true
-
       - id: rustfmt
         name: rustfmt
         entry: cargo +nightly fmt
-        language: system
-        files: none
-        always_run: true
-
-      - id: doc
-        name: doc
-        entry: cargo doc --no-deps
         language: system
         files: none
         always_run: true

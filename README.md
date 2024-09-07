@@ -35,7 +35,7 @@ Windows binaries are static executables. Users of platforms not explicitly
 mentioned below are advised to download one of these archives.
 
 If you're a **Rust programmer**, gfas can be installed with `cargo`.
-Note that the minimum supported version of Rust for gfas is **1.75.0**,
+Note that the minimum supported version of Rust for gfas is **1.77.0**,
 although gfas may work with older versions.
 
 ```

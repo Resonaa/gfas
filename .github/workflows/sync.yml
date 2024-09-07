@@ -25,4 +25,4 @@ jobs:
       - name: Sync
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        run: cargo run --release -- sync -vv
+        run: cargo run --release -- -vv
