@@ -24,9 +24,6 @@ jobs:
       - name: Get the release version from the tag
         if: env.VERSION == ''
         run: echo "VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
-      - name: Show the version
-        run: |
-          echo "version is: $VERSION"
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -142,13 +139,6 @@ jobs:
           echo "TARGET_FLAGS=--target ${{ matrix.target }}" >> $GITHUB_ENV
           echo "TARGET_DIR=./target/${{ matrix.target }}" >> $GITHUB_ENV
 
-      - name: Show command used for Cargo
-        shell: bash
-        run: |
-          echo "cargo command is: ${{ env.CARGO }}"
-          echo "target flag is: ${{ env.TARGET_FLAGS }}"
-          echo "target dir is: ${{ env.TARGET_DIR }}"
-
       - name: Build release binary
         shell: bash
         run: |
@@ -185,6 +175,7 @@ jobs:
       - name: Creating directory for archive
         shell: bash
         run: |
+          mkdir "$ARCHIVE"/
           cp "$BIN" "$ARCHIVE"/
           cp {README.md,LICENSE} "$ARCHIVE"/
           cp -r target/out/ "$ARCHIVE"/
