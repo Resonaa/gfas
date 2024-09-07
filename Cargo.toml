@@ -62,27 +62,27 @@ assets = [
         "644",
     ],
     [
-        "./docs/gfas.1",
+        "./target/out/gfas.1",
         "/usr/share/man/man1/",
         "644",
     ],
     [
-        "./docs/gfas.bash",
+        "./target/out/gfas.bash",
         "/usr/share/bash-completion/completions/gfas",
         "644",
     ],
     [
-        "./docs/gfas.fish",
+        "./target/out/gfas.fish",
         "/usr/share/fish/vendor_completions.d/",
         "644",
     ],
     [
-        "./docs/_gfas",
+        "./target/out/_gfas",
         "/usr/share/zsh/vendor-completions/",
         "644",
     ],
     [
-        "./docs/gfas.elv",
+        "./target/out/gfas.elv",
         "/usr/share/.elvish/completions/",
         "644",
     ],

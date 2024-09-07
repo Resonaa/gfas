@@ -7,8 +7,9 @@ use clap_mangen::Man;
 
 include!("src/cli.rs");
 
-fn main() -> Result<(), io::Error> {
-    let out_dir = PathBuf::from("../../docs");
+fn main() -> io::Result<()> {
+    let out_dir = PathBuf::from("../../target/out");
+    fs::create_dir(&out_dir).ok();
 
     let mut cmd = Cli::command();
 

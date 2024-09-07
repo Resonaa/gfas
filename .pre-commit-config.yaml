@@ -1,11 +1,6 @@
-exclude: ^docs/.*
 fail_fast: true
 
 repos:
-  - repo: meta
-    hooks:
-      - id: check-useless-excludes
-
   - repo: https://github.com/crate-ci/committed
     rev: v1.0.20
     hooks:

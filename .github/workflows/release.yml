@@ -52,8 +52,6 @@ jobs:
       CROSS_VERSION: v0.2.5
       # Emit backtraces on panics.
       RUST_BACKTRACE: 1
-      # Build static releases with PCRE2.
-      PCRE2_SYS_STATIC: 1
     strategy:
       fail-fast: false
       matrix:
@@ -187,10 +185,9 @@ jobs:
       - name: Creating directory for archive
         shell: bash
         run: |
-          mkdir -p "$ARCHIVE"/{complete,doc}
           cp "$BIN" "$ARCHIVE"/
           cp {README.md,LICENSE} "$ARCHIVE"/
-          cp -r docs/ "$ARCHIVE"/
+          cp -r target/out/ "$ARCHIVE"/
 
       - name: Build archive (Windows)
         shell: bash
