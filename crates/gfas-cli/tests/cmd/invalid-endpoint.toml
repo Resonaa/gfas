@@ -1,4 +1,4 @@
 bin.name = "gfas"
-args = "sync token --endpoint endpoint"
+args = "token --endpoint endpoint"
 status.code = 1
 stdout = ""

@@ -76,7 +76,7 @@ github.explore("<USER-TO-EXPLORE>", true).await?;
 
 gfas is written in Rust, so you'll need to grab a
 [Rust installation](https://www.rust-lang.org/) in order to compile it.
-gfas compiles with Rust 1.72.0 (stable) or newer. In general, gfas tracks
+gfas compiles with Rust 1.77.0 (stable) or newer. In general, gfas tracks
 the latest stable release of the Rust compiler.
 
 To build gfas:

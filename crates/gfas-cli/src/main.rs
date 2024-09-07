@@ -1,19 +1,15 @@
 use clap::Parser;
-use cli::{Cli, Commands};
+use cli::Cli;
 
 mod cli;
-mod generate;
 mod logging;
 mod sync;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let Cli { verbose, no_color, command } = Cli::parse();
+    let Cli { verbose, no_color, token, endpoint } = Cli::parse();
 
     logging::setup(verbose, no_color)?;
 
-    match command {
-        Commands::Generate { mode } => generate::generate(mode),
-        Commands::Sync { flags } => sync::sync(flags).await
-    }
+    sync::sync(token, endpoint).await
 }

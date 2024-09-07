@@ -1,4 +1,4 @@
 bin.name = "gfas"
-args = "sync"
+args = ""
 status.code = 2
 stdout = ""

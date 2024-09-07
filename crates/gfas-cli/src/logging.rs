@@ -1,3 +1,5 @@
+#![allow(unexpected_cfgs)]
+
 use std::env;
 use std::io::{self, IsTerminal};
 

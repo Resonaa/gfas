@@ -68,44 +68,37 @@ jobs:
             rust: stable
             target: i686-unknown-linux-gnu
             strip: x86_64-linux-gnu-strip
-            qemu: i386
           - build: stable-aarch64
             os: ubuntu-latest
             rust: stable
             target: aarch64-unknown-linux-gnu
             strip: aarch64-linux-gnu-strip
-            qemu: qemu-aarch64
           - build: stable-arm-gnueabihf
             os: ubuntu-latest
             rust: stable
             target: armv7-unknown-linux-gnueabihf
             strip: arm-linux-gnueabihf-strip
-            qemu: qemu-arm
           - build: stable-arm-musleabihf
             os: ubuntu-latest
             rust: stable
             target: armv7-unknown-linux-musleabihf
             strip: arm-linux-musleabihf-strip
-            qemu: qemu-arm
           - build: stable-arm-musleabi
             os: ubuntu-latest
             rust: stable
             target: armv7-unknown-linux-musleabi
             strip: arm-linux-musleabi-strip
-            qemu: qemu-arm
           # Ring is not supported on these targets
           #   - build: stable-powerpc64
           #     os: ubuntu-latest
           #     rust: stable
           #     target: powerpc64-unknown-linux-gnu
           #     strip: powerpc64-linux-gnu-strip
-          #     qemu: qemu-ppc64
           #   - build: stable-s390x
           #     os: ubuntu-latest
           #     rust: stable
           #     target: s390x-unknown-linux-gnu
           #     strip: s390x-linux-gnu-strip
-          #     qemu: qemu-s390x
           - build: macos
             os: macos-latest
             rust: nightly
@@ -208,57 +201,7 @@ jobs:
           mkdir -p "$ARCHIVE"/{complete,doc}
           cp "$BIN" "$ARCHIVE"/
           cp {README.md,LICENSE} "$ARCHIVE"/
-
-      - name: Generate man page and completions (no emulation)
-        if: matrix.qemu == ''
-        shell: bash
-        run: |
-          "$BIN" --version
-          "$BIN" generate man > "$ARCHIVE/doc/gfas.1"
-          "$BIN" generate bash > "$ARCHIVE/complete/gfas.bash"
-          "$BIN" generate fish > "$ARCHIVE/complete/gfas.fish"
-          "$BIN" generate ps > "$ARCHIVE/complete/_gfas.ps1"
-          "$BIN" generate zsh > "$ARCHIVE/complete/_gfas"
-          "$BIN" generate elvish > "$ARCHIVE/complete/gfas.elv"
-
-      - name: Generate man page and completions (emulation)
-        if: matrix.qemu != ''
-        shell: bash
-        run: |
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
-            "${{ matrix.qemu }}" "/$BIN" --version
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
-            "${{ matrix.qemu }}" "/$BIN" \
-              generate man > "$ARCHIVE/doc/gfas.1"
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
-            "${{ matrix.qemu }}" "/$BIN" \
-              generate bash > "$ARCHIVE/complete/gfas.bash"
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
-            "${{ matrix.qemu }}" "/$BIN" \
-              generate fish > "$ARCHIVE/complete/gfas.fish"
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
-            "${{ matrix.qemu }}" "/$BIN" \
-              generate ps > "$ARCHIVE/complete/_gfas.ps1"
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
-            "${{ matrix.qemu }}" "/$BIN" \
-              generate zsh > "$ARCHIVE/complete/_gfas"
-          docker run --rm -v \
-            "$PWD/target:/target:Z" \
-            "ghcr.io/cross-rs/${{ matrix.target }}:main" \
-            "${{ matrix.qemu }}" "/$BIN" \
-              generate elvish > "$ARCHIVE/complete/gfas.elv"
+          cp -r docs/ "$ARCHIVE"/
 
       - name: Build archive (Windows)
         shell: bash
@@ -294,9 +237,6 @@ jobs:
       TARGET: x86_64-unknown-linux-musl
       # Emit backtraces on panics.
       RUST_BACKTRACE: 1
-      # Since we're distributing the dpkg, we don't know whether the user will
-      # have PCRE2 installed, so just do a static build.
-      PCRE2_SYS_STATIC: 1
 
     steps:
       - name: Checkout
@@ -331,26 +271,6 @@ jobs:
           cargo build --target ${{ env.TARGET }}
           bin="target/${{ env.TARGET }}/debug/gfas"
           echo "BIN=$bin" >> $GITHUB_ENV
-
-      - name: Create deployment directory
-        shell: bash
-        run: |
-          dir=deployment/deb
-          mkdir -p "$dir"
-          echo "DEPLOY_DIR=$dir" >> $GITHUB_ENV
-
-      - name: Generate man page
-        shell: bash
-        run: |
-          "$BIN" generate man > "$DEPLOY_DIR/gfas.1"
-
-      - name: Generate shell completions
-        shell: bash
-        run: |
-          "$BIN" generate bash > "$DEPLOY_DIR/gfas.bash"
-          "$BIN" generate fish > "$DEPLOY_DIR/gfas.fish"
-          "$BIN" generate elvish > "$DEPLOY_DIR/gfas.elv"
-          "$BIN" generate zsh > "$DEPLOY_DIR/_gfas"
 
       - name: Build release binary
         shell: bash

@@ -1,21 +1,8 @@
-use clap::Args;
 use gfas_api::GitHub;
 use tokio_util::task::TaskTracker;
 use tracing::info;
 
-/// Flags used in the sync subcommand.
-#[derive(Args, Debug)]
-pub struct SyncFlags {
-    /// Access token
-    #[arg(env = "GITHUB_TOKEN")]
-    token: String,
-
-    /// GitHub API endpoint
-    #[arg(long, value_name = "URL", default_value = "https://api.github.com")]
-    endpoint: String
-}
-
-async fn run(SyncFlags { token, endpoint }: SyncFlags) -> anyhow::Result<()> {
+async fn run(token: String, endpoint: String) -> anyhow::Result<()> {
     let mut github = GitHub::new(token)?;
     github.with_host_override(endpoint);
 
@@ -45,9 +32,9 @@ async fn run(SyncFlags { token, endpoint }: SyncFlags) -> anyhow::Result<()> {
 }
 
 /// Synchronizes followings.
-pub async fn sync(flags: SyncFlags) -> anyhow::Result<()> {
+pub async fn sync(token: String, endpoint: String) -> anyhow::Result<()> {
     tokio::select! {
         res = tokio::signal::ctrl_c() => Ok(res?),
-        res = run(flags) => res
+        res = run(token, endpoint) => res
     }
 }

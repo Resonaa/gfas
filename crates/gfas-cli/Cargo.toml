@@ -32,3 +32,9 @@ tracing-subscriber = { workspace = true }
 
 [dev-dependencies]
 trycmd = { workspace = true }
+
+[build-dependencies]
+clap = { workspace = true }
+clap_complete = { workspace = true }
+clap_mangen = { workspace = true }
+clap-verbosity-flag = { workspace = true }

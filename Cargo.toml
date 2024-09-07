@@ -11,7 +11,7 @@ homepage = "https://github.com/Resonaa/gfas"
 keywords = ["github", "follow", "follower", "following", "sync"]
 categories = ["command-line-utilities", "api-bindings"]
 authors = ["Resonaa <resonaa@outlook.com>"]
-rust-version = "1.75"
+rust-version = "1.77"
 
 [workspace.dependencies]
 anyhow = "1.0.86"
@@ -62,27 +62,27 @@ assets = [
         "644",
     ],
     [
-        "./deployment/deb/gfas.1",
-        "/usr/share/man/man1/gfas.1",
+        "./docs/gfas.1",
+        "/usr/share/man/man1/",
         "644",
     ],
     [
-        "deployment/deb/gfas.bash",
+        "./docs/gfas.bash",
         "/usr/share/bash-completion/completions/gfas",
         "644",
     ],
     [
-        "deployment/deb/gfas.fish",
-        "/usr/share/fish/vendor_completions.d/gfas.fish",
+        "./docs/gfas.fish",
+        "/usr/share/fish/vendor_completions.d/",
         "644",
     ],
     [
-        "deployment/deb/_gfas",
+        "./docs/_gfas",
         "/usr/share/zsh/vendor-completions/",
         "644",
     ],
     [
-        "deployment/deb/gfas.elv",
+        "./docs/gfas.elv",
         "/usr/share/.elvish/completions/",
         "644",
     ],

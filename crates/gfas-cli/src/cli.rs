@@ -1,36 +1,22 @@
-use clap::{Parser, Subcommand};
+use clap::Parser;
 use clap_verbosity_flag::{InfoLevel, Verbosity};
-
-use crate::generate::GenerateMode;
-use crate::sync::SyncFlags;
 
 /// CLI arguments.
 #[derive(Parser, Debug)]
 #[command(about, version)]
 pub struct Cli {
+    /// Access token
+    #[arg(env = "GITHUB_TOKEN")]
+    pub token: String,
+
+    /// GitHub API endpoint
+    #[arg(long, value_name = "URL", default_value = "https://api.github.com")]
+    pub endpoint: String,
+
     /// Disable color printing
     #[arg(long, default_value_t = false)]
     pub no_color: bool,
 
     #[command(flatten)]
-    pub verbose: Verbosity<InfoLevel>,
-
-    #[command(subcommand)]
-    pub command: Commands
-}
-
-/// CLI subcommands.
-#[derive(Subcommand, Debug)]
-pub enum Commands {
-    /// Sync followings
-    Sync {
-        #[command(flatten)]
-        flags: SyncFlags
-    },
-
-    /// Generate man page or shell completions
-    Generate {
-        /// The thing to generate
-        mode: GenerateMode
-    }
+    pub verbose: Verbosity<InfoLevel>
 }
