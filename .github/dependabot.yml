@@ -21,3 +21,14 @@ updates:
       all:
         patterns:
           - "*"
+
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: daily
+    reviewers:
+      - Resonaa
+    groups:
+      all:
+        patterns:
+          - "*"
