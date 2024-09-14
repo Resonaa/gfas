@@ -50,7 +50,7 @@ binary directly from GitHub:
 $ cargo binstall gfas
 ```
 
-After installation, run `gfas help` for all commands and options.
+After installation, run `gfas --help` for all commands and options.
 
 ### API
 
@@ -85,7 +85,7 @@ To build gfas:
 $ git clone https://github.com/Resonaa/gfas
 $ cd gfas
 $ cargo build --release
-$ ./target/release/gfas help
+$ ./target/release/gfas --help
 ```
 
 ### Running tests
