@@ -6,6 +6,7 @@ on:
 
 env:
   RUST_BACKTRACE: 1
+  CARGO_TERM_VERBOSE: "true"
   CARGO_TERM_COLOR: always
 
 concurrency:

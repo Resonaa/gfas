@@ -5,6 +5,11 @@ on:
     - cron: "0 0 * * 1"
   workflow_dispatch:
 
+env:
+  RUST_BACKTRACE: 1
+  CARGO_TERM_VERBOSE: "true"
+  CARGO_TERM_COLOR: always
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -31,7 +36,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .
       - name: Patch release
-        run: cargo release patch --workspace --no-confirm --execute
+        run: cargo release patch --workspace --no-confirm -x -vv
       - name: Trigger release workflow
         shell: bash
         env:
