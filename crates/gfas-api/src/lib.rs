@@ -40,9 +40,11 @@ impl DerefMut for GitHub {
 }
 
 impl GitHub {
+    const USER_AGENT: &'static str = "gfas";
+
     /// Create a new GitHub API client.
     pub fn new(token: String) -> Result<Self> {
-        Ok(Self(Client::new("gfas", Credentials::Token(token))?))
+        Ok(Self(Client::new(Self::USER_AGENT, Credentials::Token(token))?))
     }
 
     /// Paginates through the given user profile link and returns

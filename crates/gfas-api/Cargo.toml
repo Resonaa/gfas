@@ -13,5 +13,5 @@ authors.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-octorust = { workspace = true }
-tracing = { workspace = true }
+octorust.workspace = true
+tracing.workspace = true
