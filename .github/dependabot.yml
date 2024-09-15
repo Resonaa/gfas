@@ -22,8 +22,8 @@ updates:
         patterns:
           - "*"
 
-  - package-ecosystem: "devcontainers"
-    directory: "/"
+  - package-ecosystem: devcontainers
+    directory: /.devcontainer
     schedule:
       interval: daily
     reviewers:
