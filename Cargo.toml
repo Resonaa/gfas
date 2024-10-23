@@ -14,14 +14,14 @@ authors = ["Resonaa <resonaa@outlook.com>"]
 rust-version = "1.77"
 
 [workspace.dependencies]
-anyhow = "1.0.90"
+anyhow = "1.0.91"
 clap = { version = "4.5.20", features = ["derive"] }
 clap_complete = "4.5.33"
 clap_mangen = "0.2.24"
 clap-verbosity-flag = "2.2.2"
 futures = "0.3.31"
 octorust = "0.7.0"
-tokio = { version = "1.40.0", features = [
+tokio = { version = "1.41.0", features = [
     "rt-multi-thread",
     "macros",
     "signal",
