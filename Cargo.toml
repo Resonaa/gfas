@@ -16,7 +16,7 @@ rust-version = "1.77"
 [workspace.dependencies]
 anyhow = "1.0.91"
 clap = { version = "4.5.20", features = ["derive"] }
-clap_complete = "4.5.35"
+clap_complete = "4.5.36"
 clap_mangen = "0.2.24"
 clap-verbosity-flag = "2.2.2"
 futures = "0.3.31"
@@ -29,7 +29,7 @@ tokio = { version = "1.41.0", features = [
 tokio-util = { version = "0.7.12", features = ["rt"] }
 tracing = "0.1.40"
 tracing-subscriber = "0.3.18"
-trycmd = "0.15.7"
+trycmd = "0.15.8"
 
 [workspace.metadata.release]
 pre-release-commit-message = "chore: release"
