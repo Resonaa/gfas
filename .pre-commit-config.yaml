@@ -2,7 +2,7 @@ fail_fast: true
 
 repos:
   - repo: https://github.com/crate-ci/committed
-    rev: v1.0.20
+    rev: v1.1.0
     hooks:
       - id: committed
 
