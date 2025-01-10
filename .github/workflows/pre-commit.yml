@@ -17,12 +17,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install pre-commit
-        uses: threeal/pipx-install-action@v1
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          packages: pre-commit
-      - name: Print pre-commit version
-        run: pre-commit --version
+            python-version: "3.13"
+      - name: Install pre-commit
+        run: pip install pre-commit
       - name: Update pre-commit config
         run: pre-commit autoupdate
       - name: Commit
