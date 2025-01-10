@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install pre-commit
-        uses: threeal/pipx-install-action@v2
+        uses: threeal/pipx-install-action@v1
         with:
           packages: pre-commit
       - name: Print pre-commit version
