@@ -2,7 +2,7 @@ fail_fast: true
 
 repos:
   - repo: https://github.com/crate-ci/committed
-    rev: v1.1.5
+    rev: v1.1.7
     hooks:
       - id: committed
 
@@ -17,7 +17,7 @@ repos:
       - id: mixed-line-ending
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.29.8
+    rev: v1.29.9
     hooks:
       - id: typos
         args: []
