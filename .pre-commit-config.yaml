@@ -17,7 +17,7 @@ repos:
       - id: mixed-line-ending
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.29.9
+    rev: typos-dict-v0.12.6
     hooks:
       - id: typos
         args: []
