@@ -537,7 +537,7 @@ dependencies = [
 
 [[package]]
 name = "gfas-api"
-version = "0.8.41"
+version = "0.8.42"
 dependencies = [
  "octorust",
  "tracing",
@@ -545,7 +545,7 @@ dependencies = [
 
 [[package]]
 name = "gfas-cli"
-version = "0.8.41"
+version = "0.8.42"
 dependencies = [
  "anyhow",
  "clap",
