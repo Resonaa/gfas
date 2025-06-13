@@ -15,9 +15,9 @@ rust-version = "1.77"
 
 [workspace.dependencies]
 anyhow = "1.0.98"
-clap = { version = "4.5.39", features = ["derive"] }
-clap_complete = "4.5.52"
-clap_mangen = "0.2.26"
+clap = { version = "4.5.40", features = ["derive"] }
+clap_complete = "4.5.54"
+clap_mangen = "0.2.27"
 clap-verbosity-flag = "2.2.3"
 futures = "0.3.31"
 octorust = "0.7.0"
