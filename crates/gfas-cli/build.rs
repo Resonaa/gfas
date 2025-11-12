@@ -8,22 +8,22 @@ use clap_mangen::Man;
 include!("src/cli.rs");
 
 fn main() -> io::Result<()> {
-    let out_dir = PathBuf::from("../../target/out");
-    fs::create_dir(&out_dir).ok();
+	let out_dir = PathBuf::from("../../target/out");
+	fs::create_dir(&out_dir).ok();
 
-    let mut cmd = Cli::command();
+	let mut cmd = Cli::command();
 
-    for &shell in Shell::value_variants() {
-        clap_complete::generate_to(shell, &mut cmd, "gfas", &out_dir)?;
-    }
+	for &shell in Shell::value_variants() {
+		clap_complete::generate_to(shell, &mut cmd, "gfas", &out_dir)?;
+	}
 
-    let man = Man::new(cmd);
-    let mut buffer = Vec::<u8>::new();
-    man.render(&mut buffer)?;
+	let man = Man::new(cmd);
+	let mut buffer = Vec::<u8>::new();
+	man.render(&mut buffer)?;
 
-    fs::write(out_dir.join("gfas.1"), buffer)?;
+	fs::write(out_dir.join("gfas.1"), buffer)?;
 
-    println!("cargo::rerun-if-changed=src/cli.rs");
+	println!("cargo::rerun-if-changed=src/cli.rs");
 
-    Ok(())
+	Ok(())
 }

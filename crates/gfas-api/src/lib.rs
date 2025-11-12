@@ -26,61 +26,57 @@ type Result<T> = std::result::Result<T, octorust::ClientError>;
 pub struct GitHub(Client);
 
 impl Deref for GitHub {
-    type Target = Client;
+	type Target = Client;
 
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
+	fn deref(&self) -> &Self::Target { &self.0 }
 }
 
 impl DerefMut for GitHub {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
-    }
+	fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
 }
 
 impl GitHub {
-    const USER_AGENT: &'static str = "gfas";
+	const USER_AGENT: &'static str = "gfas";
 
-    /// Create a new GitHub API client.
-    pub fn new(token: String) -> Result<Self> {
-        Ok(Self(Client::new(Self::USER_AGENT, Credentials::Token(token))?))
-    }
+	/// Create a new GitHub API client.
+	pub fn new(token: String) -> Result<Self> {
+		Ok(Self(Client::new(Self::USER_AGENT, Credentials::Token(token))?))
+	}
 
-    /// Paginates through the given user profile link and returns
-    /// discovered followings/followers collected in [`HashSet`].
-    ///
-    /// # Errors
-    ///
-    /// Fails if an error occurs during sending requests.
-    #[instrument(skip(self), ret(level = Level::TRACE), err)]
-    pub async fn explore(&self, user: &str, following: bool) -> Result<HashSet<String>> {
-        let mut res = HashSet::new();
+	/// Paginates through the given user profile link and returns
+	/// discovered followings/followers collected in [`HashSet`].
+	///
+	/// # Errors
+	///
+	/// Fails if an error occurs during sending requests.
+	#[instrument(skip(self), ret(level = Level::TRACE), err)]
+	pub async fn explore(&self, user: &str, following: bool) -> Result<HashSet<String>> {
+		let mut res = HashSet::new();
 
-        const PER_PAGE: i64 = 100;
+		const PER_PAGE: i64 = 100;
 
-        let users = self.users();
+		let users = self.users();
 
-        for page in 1.. {
-            let response = if following {
-                users.list_following_for_user(user, PER_PAGE, page).await
-            } else {
-                users.list_followers_for_user(user, PER_PAGE, page).await
-            }?;
+		for page in 1.. {
+			let response = if following {
+				users.list_following_for_user(user, PER_PAGE, page).await
+			} else {
+				users.list_followers_for_user(user, PER_PAGE, page).await
+			}?;
 
-            let explored = response.body.into_iter().map(|u| u.login);
+			let explored = response.body.into_iter().map(|u| u.login);
 
-            let len = explored.len() as i64;
+			let len = explored.len() as i64;
 
-            res.extend(explored);
+			res.extend(explored);
 
-            info!("{}(+{len})", res.len());
+			info!("{}(+{len})", res.len());
 
-            if len < PER_PAGE {
-                break;
-            }
-        }
+			if len < PER_PAGE {
+				break;
+			}
+		}
 
-        Ok(res)
-    }
+		Ok(res)
+	}
 }

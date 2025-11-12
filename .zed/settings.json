@@ -1,0 +1,13 @@
+{
+	"lsp": {
+		"rust-analyzer": {
+			"initialization_options": {
+				"rustfmt": {
+					"extraArgs": ["+nightly"]
+				}
+			}
+		}
+	},
+	"tab_size": 2,
+	"hard_tabs": true
+}
