@@ -6,7 +6,7 @@ use std::io::{self, IsTerminal};
 use clap_verbosity_flag::{InfoLevel, Verbosity};
 use log::Level;
 use tracing::level_filters::LevelFilter;
-use tracing::subscriber::{set_global_default, SetGlobalDefaultError};
+use tracing::subscriber::{SetGlobalDefaultError, set_global_default};
 
 /// Sets up tracing filter and subscriber.
 #[cfg(not(tarpaulin_include))]

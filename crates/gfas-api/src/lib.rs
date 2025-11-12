@@ -3,9 +3,9 @@
 use std::collections::HashSet;
 use std::ops::{Deref, DerefMut};
 
-use octorust::auth::Credentials;
 use octorust::Client;
-use tracing::{debug, instrument, Level};
+use octorust::auth::Credentials;
+use tracing::{Level, debug, instrument};
 
 type Result<T> = std::result::Result<T, octorust::ClientError>;
 
