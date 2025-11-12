@@ -5,7 +5,6 @@ use std::ops::{Deref, DerefMut};
 
 use octorust::Client;
 use octorust::auth::Credentials;
-use tracing::{Level, debug, instrument};
 
 type Result<T> = std::result::Result<T, octorust::ClientError>;
 
@@ -78,43 +77,5 @@ impl GitHub {
 				.map(|u| u.login)
 				.collect()
 		)
-	}
-
-	/// Paginates through the given user profile link and returns
-	/// discovered followings/followers collected in [`HashSet`].
-	///
-	/// # Errors
-	///
-	/// Fails if an error occurs during sending requests.
-	#[instrument(skip(self), ret(level = Level::TRACE), err)]
-	#[deprecated = "Use [`list_followings`] and [`list_followers`] instead."]
-	pub async fn explore(&self, user: &str, following: bool) -> Result<HashSet<String>> {
-		let mut res = HashSet::new();
-
-		const PER_PAGE: i64 = 100;
-
-		let users = self.users();
-
-		for page in 1.. {
-			let response = if following {
-				users.list_following_for_user(user, PER_PAGE, page).await
-			} else {
-				users.list_followers_for_user(user, PER_PAGE, page).await
-			}?;
-
-			let explored = response.body.into_iter().map(|u| u.login);
-
-			let len = explored.len() as i64;
-
-			res.extend(explored);
-
-			debug!("{}(+{len})", res.len());
-
-			if len < PER_PAGE {
-				break;
-			}
-		}
-
-		Ok(res)
 	}
 }
