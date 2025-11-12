@@ -1,0 +1,4 @@
+bin.name = "gfas"
+args = "token"
+status.code = 1
+stdout = ""

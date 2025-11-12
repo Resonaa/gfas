@@ -19,8 +19,11 @@ and unfollow back automatically. It runs on CLI and can be scheduled with
   [Sync](.github/workflows/sync.yml)
   workflow to any of your repositories. You can just fork this repository for convenience.
 - Create a
-  [personal access token](https://docs.github.com/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
-  with the `user:follow` permission.
+  [personal access token](https://github.com/settings/personal-access-tokens)
+  with both **Read and write** access for permission `Block another user` and `Followers`.
+  	- Block permission is necessary because one can still follow even after blocking us,
+   		in which case we are not able to follow back. We just do a quick block-and-unblock to
+     	get rid of those zombie follows.
 - Create an
   [secret](https://docs.github.com/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)
   named `TOKEN` in the repository containing the token value.
@@ -35,7 +38,7 @@ Windows binaries are static executables. Users of platforms not explicitly
 mentioned below are advised to download one of these archives.
 
 If you're a **Rust programmer**, gfas can be installed with `cargo`.
-Note that the minimum supported version of Rust for gfas is **1.77.0**,
+Note that the minimum supported version of Rust for gfas is **1.85.0**,
 although gfas may work with older versions.
 
 ```
@@ -68,15 +71,14 @@ $ cargo add gfas-api
 use gfas_api::GitHub;
 
 let github = GitHub::new(String::from("<TOKEN>"))?;
-
-github.explore("<USER-TO-EXPLORE>", true).await?;
+let followers = github.list_followers("<USERNAME>").await?;
 ```
 
 ## Building
 
 gfas is written in Rust, so you'll need to grab a
 [Rust installation](https://www.rust-lang.org/) in order to compile it.
-gfas compiles with Rust 1.77.0 (stable) or newer. In general, gfas tracks
+gfas compiles with Rust 1.85.0 (stable) or newer. In general, gfas tracks
 the latest stable release of the Rust compiler.
 
 To build gfas:
