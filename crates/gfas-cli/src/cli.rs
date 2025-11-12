@@ -17,6 +17,10 @@ pub struct Cli {
 	#[arg(long, default_value_t = false)]
 	pub no_color: bool,
 
+	/// Dry run
+	#[arg(long, short, default_value_t = false)]
+	pub dry_run: bool,
+
 	#[command(flatten)]
 	pub verbose: Verbosity<InfoLevel>
 }

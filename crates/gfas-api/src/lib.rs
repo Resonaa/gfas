@@ -5,7 +5,7 @@ use std::ops::{Deref, DerefMut};
 
 use octorust::auth::Credentials;
 use octorust::Client;
-use tracing::{info, instrument, Level};
+use tracing::{debug, instrument, Level};
 
 type Result<T> = std::result::Result<T, octorust::ClientError>;
 
@@ -70,7 +70,7 @@ impl GitHub {
 
 			res.extend(explored);
 
-			info!("{}(+{len})", res.len());
+			debug!("{}(+{len})", res.len());
 
 			if len < PER_PAGE {
 				break;
