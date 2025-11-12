@@ -27,7 +27,7 @@ and unfollow back automatically. It runs on CLI and can be scheduled with
 - Create an
   [secret](https://docs.github.com/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)
   named `TOKEN` in the repository containing the token value.
-- Customize your workflow, e.g. modify the [scheduled time](https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule) (defaults to every 6 hours).
+- Customize your workflow, e.g. modify the [scheduled time](https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule) (defaults to daily at midnight).
 - Maybe you want to trigger it manually to see the effect.
 
 ### CLI
