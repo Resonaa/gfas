@@ -13,7 +13,7 @@ async fn run(token: String, endpoint: String, dry_run: bool) -> anyhow::Result<(
 	info!("current user: {user}");
 
 	let (following, followers) =
-		tokio::try_join!(github.explore(&user, true), github.explore(&user, false))?;
+		tokio::try_join!(github.list_followings(&user), github.list_followers(&user))?;
 
 	if dry_run {
 		let to_unfollow = following.difference(&followers).cloned().collect::<Vec<_>>();
@@ -56,7 +56,7 @@ async fn run(token: String, endpoint: String, dry_run: bool) -> anyhow::Result<(
 
 	let tracker = TaskTracker::new();
 
-	let new_following = github.explore(&user, true).await?;
+	let new_following = github.list_followings(&user).await?;
 
 	followers
 		.difference(&following)

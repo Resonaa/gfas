@@ -39,8 +39,45 @@ impl GitHub {
 	const USER_AGENT: &'static str = "gfas";
 
 	/// Create a new GitHub API client.
+	#[allow(clippy::result_large_err)]
 	pub fn new(token: String) -> Result<Self> {
 		Ok(Self(Client::new(Self::USER_AGENT, Credentials::Token(token))?))
+	}
+
+	/// List all followings of given user.
+	///
+	/// # Errors
+	///
+	/// Fails if an error occurs during sending requests.
+	pub async fn list_followings(&self, user: &str) -> Result<HashSet<String>> {
+		Ok(
+			self
+				.users()
+				.list_all_following_for_user(user)
+				.await?
+				.body
+				.into_iter()
+				.map(|u| u.login)
+				.collect()
+		)
+	}
+
+	/// List all followings of given user.
+	///
+	/// # Errors
+	///
+	/// Fails if an error occurs during sending requests.
+	pub async fn list_followers(&self, user: &str) -> Result<HashSet<String>> {
+		Ok(
+			self
+				.users()
+				.list_all_followers_for_user(user)
+				.await?
+				.body
+				.into_iter()
+				.map(|u| u.login)
+				.collect()
+		)
 	}
 
 	/// Paginates through the given user profile link and returns
@@ -50,6 +87,7 @@ impl GitHub {
 	///
 	/// Fails if an error occurs during sending requests.
 	#[instrument(skip(self), ret(level = Level::TRACE), err)]
+	#[deprecated = "Use [`list_followings`] and [`list_followers`] instead."]
 	pub async fn explore(&self, user: &str, following: bool) -> Result<HashSet<String>> {
 		let mut res = HashSet::new();
 

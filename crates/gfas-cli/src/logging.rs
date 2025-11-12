@@ -3,7 +3,8 @@
 use std::env;
 use std::io::{self, IsTerminal};
 
-use clap_verbosity_flag::{InfoLevel, Level, Verbosity};
+use clap_verbosity_flag::{InfoLevel, Verbosity};
+use log::Level;
 use tracing::level_filters::LevelFilter;
 use tracing::subscriber::{set_global_default, SetGlobalDefaultError};
 
