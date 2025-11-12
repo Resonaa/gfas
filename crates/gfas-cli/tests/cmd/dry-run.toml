@@ -1,0 +1,4 @@
+bin.name = "gfas"
+args = "token --dry-run"
+status.code = 1
+stdout = ""

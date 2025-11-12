@@ -1,4 +1,8 @@
-trailing_comma = "Never"
-use_small_heuristics = "Max"
 imports_granularity = "Module"
 group_imports = "StdExternalCrate"
+trailing_comma = "Never"
+tab_spaces = 2
+use_small_heuristics = "Max"
+newline_style = "Unix"
+fn_single_line = true
+hard_tabs = true

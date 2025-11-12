@@ -7,9 +7,9 @@ mod sync;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let Cli { verbose, no_color, token, endpoint } = Cli::parse();
+	let Cli { verbose, no_color, token, endpoint, dry_run } = Cli::parse();
 
-    logging::setup(verbose, no_color)?;
+	logging::setup(verbose, no_color)?;
 
-    sync::sync(token, endpoint).await
+	sync::sync(token, endpoint, dry_run).await
 }
