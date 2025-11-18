@@ -18,9 +18,10 @@ and unfollow back automatically. It runs on CLI and can be scheduled with
 - Copy-paste the
   [Sync](.github/workflows/sync.yml)
   workflow to any of your repositories. You can just fork this repository for convenience.
+  - Don't forget to enable GitHub Actions **and the Sync workflow** in your fork.
 - Create a
   [personal access token](https://github.com/settings/personal-access-tokens)
-  with both **Read and write** access for permission `Block another user` and `Followers`.
+  with both **read and write** access for permission `Block another user` and `Followers`.
   	- Block permission is necessary because one can still follow even after blocking us,
    		in which case we are not able to follow back. We just do a quick block-and-unblock to
      	get rid of those zombie follows.
