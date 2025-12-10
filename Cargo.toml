@@ -30,7 +30,7 @@ tokio-util = { version = "0.7.17", features = ["rt"] }
 tracing = "0.1.43"
 tracing-subscriber = "0.3.22"
 trycmd = "0.15.11"
-log = "0.4.28"
+log = "0.4.29"
 
 [workspace.metadata.release]
 pre-release-commit-message = "chore: release"
