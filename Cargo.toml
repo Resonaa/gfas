@@ -14,8 +14,8 @@ authors = ["Resonaa <resonaa@outlook.com>"]
 rust-version = "1.85"
 
 [workspace.dependencies]
-anyhow = "1.0.100"
-clap = { version = "4.5.54", features = ["derive"] }
+anyhow = "1.0.101"
+clap = { version = "4.5.57", features = ["derive"] }
 clap_complete = "4.5.65"
 clap_mangen = "0.2.31"
 clap-verbosity-flag = "3.0.4"
