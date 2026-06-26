@@ -17,7 +17,7 @@ rust-version = "1.85"
 anyhow = "1.0.102"
 clap = { version = "4.5.60", features = ["derive"] }
 clap_complete = "4.5.66"
-clap_mangen = "0.2.31"
+clap_mangen = "0.3.0"
 clap-verbosity-flag = "3.0.4"
 futures = "0.3.32"
 octorust = "0.10.0"
